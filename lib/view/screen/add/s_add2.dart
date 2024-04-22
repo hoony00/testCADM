@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,26 +19,16 @@ class PickImg extends ConsumerStatefulWidget {
 class _PickImgState extends ConsumerState<PickImg> {
   final ImagePicker _picker = ImagePicker();
 
-  void onClickCameraButton() {
-    PermissionUtil.checkCameraPermission(context, mounted).then((isGranted) {
-      if (isGranted) {
-        pickImages();
-        Navigator.of(context).pop();
-      } else {
-        Navigator.of(context).pop();
-      }
-    });
-  }
-
   Future pickImages() async {
     print("이미지 선택 시작");
 
-    final List<XFile> selectedImages = await _picker.pickMultiImage();
-    if (selectedImages.isNotEmpty) {
-      //기존에 리스트에 붙히기
+    await PermissionUtil.checkGalleryPermission2();
 
-      ref.watch(selectedImgProvider.notifier).insertImg(selectedImages);
-    }
+      final List<XFile> selectedImages = await _picker.pickMultiImage();
+      if (selectedImages != null && selectedImages.isNotEmpty) {
+        // 기존에 리스트에 붙히기
+        ref.watch(selectedImgProvider.notifier).insertImg(selectedImages);
+      }
   }
 
   // 업로드
@@ -47,8 +36,24 @@ class _PickImgState extends ConsumerState<PickImg> {
     ref.watch(selectedImgProvider.notifier).upload();
   }
 
+  Future<void> checkPermission() async {
+    PermissionStatus status = await Permission.photos.status;
+
+    print("현재 권한 상태 : $status");
+  }
+
+  @override
+  void initState() {
+
+    checkPermission();
+
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+
     return Column(
       children: [
         Row(
@@ -56,7 +61,7 @@ class _PickImgState extends ConsumerState<PickImg> {
           children: [
             /// 갤러리 접근 버튼
             InkWell(
-              onTap: () => onClickCameraButton(),
+              onTap: () => pickImages(),
               child: const Icon(Icons.picture_as_pdf_outlined),
             ),
             SizedBox(width: 50.w),
