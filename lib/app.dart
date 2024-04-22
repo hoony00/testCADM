@@ -6,7 +6,6 @@ import 'package:test04dm/common/extension/context_extension.dart';
 import 'package:test04dm/view/main_page.dart';
 
 import 'common/colors/color_palette.dart';
-import 'view/screen/gym/s_gym.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -71,10 +70,7 @@ class _AppState extends State<App> with Nav, WidgetsBindingObserver {
         path: '/',
         builder: (context, state) => const MainPage(),
         routes: [
-          GoRoute(
-            path: 'home',
-            builder: (context, state) => const GymScreen(),
-          ),
+
         ],
       ),
     ],
