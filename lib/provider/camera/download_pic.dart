@@ -26,6 +26,15 @@ class DownloadImgNotifier extends StateNotifier<List<String>> {
     }
   }
 
+  //더비 데이터 넣기
+  Future<void> insertDummyData() async {
+    final List<String> imgList = [];
+    for (var i = 0; i < 10; i++) {
+      imgList.add('https://picsum.photos/200/$i');
+    }
+    state = imgList;
+  }
+
 
 }
 

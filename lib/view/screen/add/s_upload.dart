@@ -24,11 +24,11 @@ class _PickImgState extends ConsumerState<PickImg> {
 
     await PermissionUtil.checkGalleryPermission2(context);
 
-      final List<XFile> selectedImages = await _picker.pickMultiImage();
-      if (selectedImages != null && selectedImages.isNotEmpty) {
-        // 기존에 리스트에 붙히기
-        ref.watch(selectedImgProvider.notifier).insertImg(selectedImages);
-      }
+    final List<XFile> selectedImages = await _picker.pickMultiImage();
+    if (selectedImages != null && selectedImages.isNotEmpty) {
+      // 기존에 리스트에 붙히기
+      ref.watch(selectedImgProvider.notifier).insertImg(selectedImages);
+    }
   }
 
   // 업로드
@@ -44,7 +44,6 @@ class _PickImgState extends ConsumerState<PickImg> {
 
   @override
   void initState() {
-
     checkPermission();
 
     // TODO: implement initState
@@ -53,12 +52,13 @@ class _PickImgState extends ConsumerState<PickImg> {
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
+        if(ref.watch(selectedImgProvider).isEmpty)
+           Text('선택된 이미지가 없습니다.', style: TextStyle(fontSize: 30.h),),
+        if(ref.watch(selectedImgProvider).isNotEmpty)
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             SizedBox(width: 5.w),
             Expanded(
@@ -67,41 +67,39 @@ class _PickImgState extends ConsumerState<PickImg> {
                 child: Column(
                   children: [
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        for (var i = 0;
-                        i < ref
-                            .watch(selectedImgProvider)
-                            .length;
-                        i++)
-                          Stack(
-                            children: [
-                              Container(
-                                margin: EdgeInsets.symmetric(horizontal: 2.w),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8.w),
-                                  image: DecorationImage(
-                                    image: FileImage(File(ref
-                                        .watch(selectedImgProvider)[i]
-                                        .path)),
-                                    fit: BoxFit.cover,
+                          for (var i = 0; i < ref
+                              .watch(selectedImgProvider)
+                              .length; i++)
+                            Stack(
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.symmetric(horizontal: 2.w),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8.w),
+                                    image: DecorationImage(
+                                      image: FileImage(File(ref
+                                          .watch(selectedImgProvider.notifier).state[i].path)),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  width: 100.w,
+                                  height: 100.w,
+                                ),
+                                Positioned(
+                                  top: 0,
+                                  right: 0,
+                                  child: InkWell(
+                                    onTap: () => ref
+                                        .watch(selectedImgProvider.notifier)
+                                        .removeImg(i),
+                                    child: Icon(Icons.close),
                                   ),
                                 ),
-                                width: 80.w,
-                                height: 80.w,
-                              ),
-                              Positioned(
-                                top: 0,
-                                right: 0,
-                                child: InkWell(
-                                  onTap: () =>
-                                      ref
-                                          .watch(selectedImgProvider.notifier)
-                                          .removeImg(i),
-                                  child: Icon(Icons.close),
-                                ),
-                              ),
-                            ],
-                          )
+                              ],
+                            ),
+
                       ],
                     ),
 
@@ -111,53 +109,78 @@ class _PickImgState extends ConsumerState<PickImg> {
             )
           ],
         ),
-     Column(
-       children: [
-         ElevatedButton(
-           onPressed: () =>
-               ref.watch(selectedImgProvider.notifier).upload(),
-           child: Text('업로드  '),
-         ),
-         ElevatedButton(
-           onPressed: () {
-             // 모든 사진의 확장자 표시
-             print(
-                 ref.watch(selectedImgProvider).map((e) => e.path));
-           },
-           child: Text('확장자 표시'),
-         ),
-         ElevatedButton(
-           onPressed: () {
-             // 모든 사진 제거
-             ref.watch(selectedImgProvider.notifier).removeAll();
-           },
-           child: Text('삭제'),
-         ),
-       ],
-     ),
-
+        Column(
+          children: [
+            ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.blue),
+              ),
+              onPressed: () => ref.watch(selectedImgProvider.notifier).upload(),
+              child: Text(
+                '업로드',
+                style: TextStyle(fontSize: 30),
+              ),
+            ),
+            SizedBox(height: 10.h),
+            ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.green),
+              ),
+              onPressed: () {
+                // 모든 사진의 확장자 표시
+                print(ref.watch(selectedImgProvider).map((e) => e.path));
+              },
+              child: Text(
+                '확장자 표시',
+                style: TextStyle(fontSize: 30),
+              ),
+            ),
+            SizedBox(height: 10.h),
+            ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.red),
+              ),
+              onPressed: () {
+                // 모든 사진 제거
+                ref.watch(selectedImgProvider.notifier).removeAll();
+              },
+              child: Text(
+                '삭제',
+                style: TextStyle(fontSize: 30),
+              ),
+            ),
+          ],
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-          InkWell(
-            onTap: () => pickImages(context),
-            child: const Icon(Icons.photo, size: 60,),
-          ),
-          SizedBox(width: 50.w),
-          InkWell(
-            onTap: () async {
-              XFile? selectedImages = await _picker.pickImage(source: ImageSource.camera);
-              if (selectedImages != null) {
-                ref
-                    .watch(selectedImgProvider.notifier)
-                    .insertCameraImg(selectedImages);
-              }else{
-                return;
-              }
-            },
-            child: const Icon(Icons.camera_alt, size: 60,),
-          ),
-        ],)
+            InkWell(
+              onTap: () => pickImages(context),
+              child: const Icon(
+                Icons.photo,
+                size: 60,
+              ),
+            ),
+            SizedBox(width: 50.w),
+            InkWell(
+              onTap: () async {
+                XFile? selectedImages =
+                    await _picker.pickImage(source: ImageSource.camera);
+                if (selectedImages != null) {
+                  ref
+                      .watch(selectedImgProvider.notifier)
+                      .insertCameraImg(selectedImages);
+                } else {
+                  return;
+                }
+              },
+              child: const Icon(
+                Icons.camera_alt,
+                size: 60,
+              ),
+            ),
+          ],
+        )
       ],
     );
   }

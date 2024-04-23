@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:test04dm/provider/camera/download_pic.dart';
+import 'package:test04dm/provider/camera/send_pic.dart';
 
-class CheckScreen extends StatefulWidget {
+class CheckScreen extends ConsumerStatefulWidget {
   const CheckScreen({super.key});
 
   @override
-  State<CheckScreen> createState() => _CheckScreenState();
+  ConsumerState<CheckScreen> createState() => _CheckScreenState();
 }
 
-class _CheckScreenState extends State<CheckScreen> {
+class _CheckScreenState extends ConsumerState<CheckScreen> {
 
-  late List<String> photoPaths;
+
+  @override
+  void initState() {
+    ref.read(downloadImgProvider.notifier).insertDummyData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +28,7 @@ class _CheckScreenState extends State<CheckScreen> {
       ),
       body: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: photoPaths.length,
+        itemCount: ref.watch(downloadImgProvider).length,
         itemBuilder: (context, index) {
           return Padding(
             padding: EdgeInsets.all(8.0),
@@ -34,7 +42,7 @@ class _CheckScreenState extends State<CheckScreen> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(15.0),
                   child: Image.network(
-                    photoPaths[index],
+                    ref.watch(downloadImgProvider)[index],
                     fit: BoxFit.cover,
                   ),
                 ),
