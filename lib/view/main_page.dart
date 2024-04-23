@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:test04dm/view/screen/add/s_add.dart';
-import 'package:test04dm/view/screen/add/s_add2.dart';
+import 'package:test04dm/view/screen/add/s_check.dart';
+import 'package:test04dm/view/screen/add/s_upload.dart';
 
-import '../common/colors/color_palette.dart';
 import '../provider/page_index_provider.dart';
 import 'Navigation/bottom_navigation/w_convex_bottom.dart';
 
@@ -27,7 +26,7 @@ class MainScreenState extends ConsumerState<MainPage>
 
     final List<Widget> body = [
       Visibility(visible: indexProvider == 0, child: const PickImg()),
-      Visibility(visible: indexProvider == 1, child: const AddScreen()),
+      Visibility(visible: indexProvider == 1, child: const CheckScreen()),
     ];
 
     return Scaffold(

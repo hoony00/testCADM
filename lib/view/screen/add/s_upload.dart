@@ -7,7 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../../common/permission/permission_util.dart';
-import '../../../provider/camera/sendPic.dart';
+import '../../../provider/camera/send_pic.dart';
 
 class PickImg extends ConsumerStatefulWidget {
   const PickImg({super.key});
