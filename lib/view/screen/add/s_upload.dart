@@ -19,16 +19,15 @@ class PickImgScreen extends ConsumerStatefulWidget {
 }
 
 class _PickImgState extends ConsumerState<PickImgScreen> {
-
-
   bool isUploading = false;
 
   final ImagePicker _picker = ImagePicker();
 
+  /// 갤러리
   Future pickImages(BuildContext context) async {
     print("이미지 선택 시작");
 
-    await PermissionUtil.checkGalleryPermission2(context);
+    await PermissionUtil.checkGalleryPermission(context);
 
     final List<XFile> selectedImages = await _picker.pickMultiImage();
 
@@ -44,12 +43,35 @@ class _PickImgState extends ConsumerState<PickImgScreen> {
     }
   }
 
+  /// 카메라
+  Future picCamera() async {
+    print("카메라 선택 시작");
+
+    await PermissionUtil.checkCameraPermission(context);
+
+    final XFile? selectedImage =
+        await _picker.pickImage(source: ImageSource.camera);
+
+    if (selectedImage != null) {
+      // 기존에 리스트에 붙히기
+      setState(() {
+        isUploading = true;
+      });
+      ref.watch(selectedImgProvider.notifier).insertImg([selectedImage]);
+      setState(() {
+        isUploading = false;
+      });
+    } else {
+      return;
+    }
+  }
+
   // 업로드
-  void upload()  async {
+  void upload() async {
     setState(() {
       isUploading = true;
     });
-  await  ref.watch(selectedImgProvider.notifier).upload();
+    await ref.watch(selectedImgProvider.notifier).upload();
     setState(() {
       isUploading = false;
     });
@@ -57,39 +79,43 @@ class _PickImgState extends ConsumerState<PickImgScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     final selectedImgNotifier = ref.watch(selectedImgProvider.notifier);
     final selectedImages = ref.watch(selectedImgProvider);
-
 
     return Stack(
       children: [
         Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            if(ref.watch(selectedImgProvider).isEmpty)
-               Text('선택된 이미지가 없습니다.', style: TextStyle(fontSize: 30.h),),
-            if(ref.watch(selectedImgProvider).isNotEmpty)
-            Row(
-              children: [
-                SizedBox(width: 5.w),
-                Expanded(
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
+            if (ref.watch(selectedImgProvider).isEmpty)
+              Text(
+                '선택된 이미지가 없습니다.',
+                style: TextStyle(fontSize: 30.h),
+              ),
+            if (ref.watch(selectedImgProvider).isNotEmpty)
+              Row(
+                children: [
+                  SizedBox(width: 5.w),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
                               for (var i = 0; i < selectedImages.length; i++)
                                 Stack(
                                   children: [
                                     Container(
-                                      margin: EdgeInsets.symmetric(horizontal: 2.w),
+                                      margin:
+                                          EdgeInsets.symmetric(horizontal: 2.w),
                                       decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(8.w),
+                                        borderRadius:
+                                            BorderRadius.circular(8.w),
                                         image: DecorationImage(
-                                          image: FileImage(File(selectedImages[i].path)),
+                                          image: FileImage(
+                                              File(selectedImages[i].path)),
                                           fit: BoxFit.cover,
                                         ),
                                       ),
@@ -100,23 +126,24 @@ class _PickImgState extends ConsumerState<PickImgScreen> {
                                       top: 0,
                                       right: 0,
                                       child: InkWell(
-                                        onTap: () => selectedImgNotifier
-                                            .removeImg(i),
-                                        child: const Icon(Icons.close, size:  30,),
+                                        onTap: () =>
+                                            selectedImgNotifier.removeImg(i),
+                                        child: const Icon(
+                                          Icons.close,
+                                          size: 30,
+                                        ),
                                       ),
                                     ),
                                   ],
                                 ),
-
-                          ],
-                        ),
-
-                      ],
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                )
-              ],
-            ),
+                  )
+                ],
+              ),
             Container(
               padding: EdgeInsets.all(30),
               decoration: BoxDecoration(
@@ -184,14 +211,7 @@ class _PickImgState extends ConsumerState<PickImgScreen> {
                 SizedBox(width: 50.w),
                 InkWell(
                   onTap: () async {
-                    XFile? selectedImages =
-                        await _picker.pickImage(source: ImageSource.camera);
-                    if (selectedImages != null) {
-                      selectedImgNotifier
-                          .insertCameraImg(selectedImages);
-                    } else {
-                      return;
-                    }
+                    picCamera();
                   },
                   child: const Column(
                     children: [
@@ -207,8 +227,9 @@ class _PickImgState extends ConsumerState<PickImgScreen> {
             )
           ],
         ),
-        isUploading ?
-          const LoadingContainer(text: '업로드 중...') : const SizedBox(),
+        isUploading
+            ? const LoadingContainer(text: '업로드 중...')
+            : const SizedBox(),
       ],
     );
   }
