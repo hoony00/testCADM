@@ -84,8 +84,8 @@ class _PickImgState extends ConsumerState<PickImg> {
                                       fit: BoxFit.cover,
                                     ),
                                   ),
-                                  width: 100.w,
-                                  height: 100.w,
+                                  width: 130.w,
+                                  height: 140.w,
                                 ),
                                 Positioned(
                                   top: 0,
@@ -94,7 +94,7 @@ class _PickImgState extends ConsumerState<PickImg> {
                                     onTap: () => ref
                                         .watch(selectedImgProvider.notifier)
                                         .removeImg(i),
-                                    child: Icon(Icons.close),
+                                    child: const Icon(Icons.close, size:  30,),
                                   ),
                                 ),
                               ],
@@ -109,56 +109,68 @@ class _PickImgState extends ConsumerState<PickImg> {
             )
           ],
         ),
-        Column(
-          children: [
-            ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.blue),
+        Container(
+          padding: EdgeInsets.all(30),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.white, width: 2),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Column(
+            children: [
+              ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.blue),
+                ),
+                onPressed: () => ref.watch(selectedImgProvider.notifier).upload(),
+                child: Text(
+                  '업로드',
+                  style: TextStyle(fontSize: 30),
+                ),
               ),
-              onPressed: () => ref.watch(selectedImgProvider.notifier).upload(),
-              child: Text(
-                '업로드',
-                style: TextStyle(fontSize: 30),
+              SizedBox(height: 10.h),
+              ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.green),
+                ),
+                onPressed: () {
+                  // 모든 사진의 확장자 표시
+                  print(ref.watch(selectedImgProvider).map((e) => e.path));
+                },
+                child: const Text(
+                  '확장자 표시',
+                  style: TextStyle(fontSize: 30),
+                ),
               ),
-            ),
-            SizedBox(height: 10.h),
-            ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.green),
+              SizedBox(height: 10.h),
+              ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.red),
+                ),
+                onPressed: () {
+                  // 모든 사진 제거
+                  ref.watch(selectedImgProvider.notifier).removeAll();
+                },
+                child: const Text(
+                  '삭제',
+                  style: TextStyle(fontSize: 30),
+                ),
               ),
-              onPressed: () {
-                // 모든 사진의 확장자 표시
-                print(ref.watch(selectedImgProvider).map((e) => e.path));
-              },
-              child: Text(
-                '확장자 표시',
-                style: TextStyle(fontSize: 30),
-              ),
-            ),
-            SizedBox(height: 10.h),
-            ElevatedButton(
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.red),
-              ),
-              onPressed: () {
-                // 모든 사진 제거
-                ref.watch(selectedImgProvider.notifier).removeAll();
-              },
-              child: Text(
-                '삭제',
-                style: TextStyle(fontSize: 30),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             InkWell(
               onTap: () => pickImages(context),
-              child: const Icon(
-                Icons.photo,
-                size: 60,
+              child: Column(
+                children: [
+                  const Icon(
+                    Icons.photo,
+                    size: 60,
+                  ),
+                  const Text('갤러리'),
+                ],
               ),
             ),
             SizedBox(width: 50.w),
@@ -174,9 +186,14 @@ class _PickImgState extends ConsumerState<PickImg> {
                   return;
                 }
               },
-              child: const Icon(
-                Icons.camera_alt,
-                size: 60,
+              child: Column(
+                children: [
+                  const Icon(
+                    Icons.camera_alt,
+                    size: 60,
+                  ),
+                  const Text('카메라'),
+                ],
               ),
             ),
           ],
