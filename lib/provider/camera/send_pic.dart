@@ -5,6 +5,7 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:test04dm/provider/enum/upload_status.dart';
 
 import '../../common/exception/exception.dart';
 
@@ -13,42 +14,8 @@ class SelectedImgNotifier extends StateNotifier<List<XFile>> {
 
   final String url = 'https://88c9-61-98-7-200.ngrok-free.app';
   final ExceptionDio exceptionDio = ExceptionDio();
+  var  uploadStatus = UploadStatus.idle;
 
-  // 이미지 추가
-  void insertImg(List<XFile> list) {
-    state = [...state, ...list];
-  }
-
-  // 카메라 이미지 추가
-  void insertCameraImg(XFile file) {
-    state = [...state, file];
-  }
-
-  // 이미지 삭제
-  void removeImg(int idx) {
-    if (idx >= 0 && idx < state.length) {
-      state = List<XFile>.from(state)..removeAt(idx);
-    }
-  }
-
-  // 전체 이미지 삭제
-  void removeAll() {
-    state = [];
-  }
-
-  // 확장자 제거
-  String removeExtension(String path) {
-    int lastDotIndex = path.lastIndexOf('.');
-    if (lastDotIndex == -1) {
-      return path;
-    }
-    String extensionStart = path.substring(0, lastDotIndex);
-    int lastSlashIndex = extensionStart.lastIndexOf('/');
-    if (lastSlashIndex != -1) {
-      extensionStart = extensionStart.substring(lastSlashIndex + 1);
-    }
-    return path.substring(0, lastDotIndex - extensionStart.length);
-  }
 
   // 이미지 업로드
   Future<void> upload() async {
@@ -60,6 +27,9 @@ class SelectedImgNotifier extends StateNotifier<List<XFile>> {
     debugPrint("========== 사진 업로드 시작 ==========");
 
     try {
+      uploadStatus = UploadStatus.uploading;
+      print("로딩 시작 uploadStatus : $uploadStatus");
+
       List<String> imageURLs = [];
       for (var i = 0; i < state.length; i++) {
         var imageType = state[i].path.split('.').last;
@@ -114,6 +84,43 @@ class SelectedImgNotifier extends StateNotifier<List<XFile>> {
     return response;
   }
 
+  // 이미지 추가
+  void insertImg(List<XFile> list) {
+    state = [...state, ...list];
+  }
+
+  // 카메라 이미지 추가
+  void insertCameraImg(XFile file) {
+    state = [...state, file];
+  }
+
+  // 이미지 삭제
+  void removeImg(int idx) {
+    if (idx >= 0 && idx < state.length) {
+      state = List<XFile>.from(state)..removeAt(idx);
+    }
+  }
+
+  // 전체 이미지 삭제
+  void removeAll() {
+    state = [];
+  }
+
+  // 확장자 제거
+  String removeExtension(String path) {
+    int lastDotIndex = path.lastIndexOf('.');
+    if (lastDotIndex == -1) {
+      return path;
+    }
+    String extensionStart = path.substring(0, lastDotIndex);
+    int lastSlashIndex = extensionStart.lastIndexOf('/');
+    if (lastSlashIndex != -1) {
+      extensionStart = extensionStart.substring(lastSlashIndex + 1);
+    }
+    return path.substring(0, lastDotIndex - extensionStart.length);
+  }
+
+
   // 이미지 압축
   Future<XFile?> compressImage(String path, String imageType) async {
     return await FlutterImageCompress.compressAndGetFile(
@@ -148,6 +155,11 @@ class SelectedImgNotifier extends StateNotifier<List<XFile>> {
       );
 
       await handleResponse(saleResponse, "상품 등록", isDioResponse: true);
+
+      if(saleResponse.statusCode == 200){
+        state = [];
+      }
+
     } catch (e) {
       if (e is DioException) {
         await handleDioError(e);
@@ -155,6 +167,9 @@ class SelectedImgNotifier extends StateNotifier<List<XFile>> {
         debugPrint("알 수 없는 오류: $e");
       }
     }
+
+    uploadStatus = UploadStatus.idle;
+    print("로딩 끝 uploadStatus : $uploadStatus");
   }
 
   // HTTP 응답 처리

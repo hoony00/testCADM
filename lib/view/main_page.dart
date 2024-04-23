@@ -27,7 +27,7 @@ class MainScreenState extends ConsumerState<MainPage>
     final indexProvider = ref.watch(pageIndexProvider);
 
     final List<Widget> body = [
-      Visibility(visible: indexProvider == 0, child: const PickImg()),
+      Visibility(visible: indexProvider == 0, child: const PickImgScreen()),
       Visibility(visible: indexProvider == 1, child: const CheckScreen()),
     ];
 
