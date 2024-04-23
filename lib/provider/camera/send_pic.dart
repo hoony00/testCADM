@@ -1,10 +1,10 @@
-import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:http/http.dart' as http;
 
 import '../../common/exception/exception.dart';
 import '../../view/screen/add/s_check.dart';
@@ -58,12 +58,11 @@ class SelectedImgNotifier extends StateNotifier<List<XFile>> {
     }
 
     debugPrint("========== 사진 업로드 시작 ==========");
-    var dio = Dio();
-    var formData = FormData();
 
     try {
       for (var i = 0; i < state.length; i++) {
         var imageType = state[i].path.split('.').last;
+        //확장자 구별
         var compressedFile = await compressImage(state[i].path, imageType);
 
         if (compressedFile == null) {
@@ -71,75 +70,38 @@ class SelectedImgNotifier extends StateNotifier<List<XFile>> {
           return;
         }
 
-        formData.files.add(MapEntry(
-          "images",
-          await MultipartFile.fromFile(
-            compressedFile.path,
-            filename: 'saleIdx_$i.$imageType',
-          ),
-        ));
-      }
-    } catch (e) {
-      debugPrint("압축 오류 : $e");
-      return;
-    }
+        // 이미지 업로드 요청
+        var response = await uploadImage(compressedFile, i, imageType);
+        await handleResponse(response, "이미지 저장");
 
-    for(var i = 0; i < formData.files.length; i++){
-      debugPrint("formData.files[$i] : ${formData.files[i]}");
-      debugPrint("formData.files[$i].key : ${formData.files[i].key}");
-      debugPrint("formData.files[$i].value : ${formData.files[i].value}");
-    }
-
-
-    debugPrint("${formData.files.length}개의 이미지가 업로드 됩니다. 잠시만 기다려주세요.......");
-
-
-
-
-    try {
-      Response imagesResponse = await dio.post(
-        '$url/sales/images',
-        data: formData,
-      );
-
-
-
-      await handleResponse(imagesResponse, "이미지 저장");
-
-      if (imagesResponse.statusCode == 200) {
-        debugPrint("<--이미지 업로드 성공 OK! -->");
-
-        List<String> imageURLs = [];
-        for (var i = 0; i < imagesResponse.data.length; i++) {
-          imageURLs.add(imagesResponse.data[i]);
+        if (response.statusCode == 200) {
+          debugPrint("<--이미지 업로드 성공 OK! -->");
         }
-        debugPrint("일반 판매 게시물 업로드 중........ 잠시만 기다려주세요");
-
-        var saleResponse = await dio.post(
-          '$url/sales',
-          data: {
-            "price": 1000,
-            "mark": false,
-            "option": "abcd",
-            "product": {
-              "name": "1234",
-              "type": "레이저",
-              "year": 2024,
-              "company": "abc",
-              "area": "서울"
-            },
-            "images": imageURLs,
-          },
-        );
-
-        await handleResponse(saleResponse, "일반 판매 게시물 업로드");
       }
     } catch (e) {
       if (e is DioException) {
         await handleDioError(e);
       } else {
         debugPrint("알 수 없는 오류: $e");
-      }    }
+      }
+    }
+  }
+
+  // 이미지 업로드 요청
+  Future<http.Response> uploadImage(XFile file, int index, String imageType) async {
+    var uri = Uri.parse('$url/sales/images');
+    var request = http.MultipartRequest('POST', uri);
+    var stream = http.ByteStream(file.openRead());
+    var length = await file.length();
+    var multipartFile = http.MultipartFile(
+      'images',
+      stream,
+      length,
+      filename: 'saleIdx_$index.jpg', // 확장자를 .jpg로 변경
+    );
+    request.files.add(multipartFile);
+    var response = await http.Response.fromStream(await request.send());
+    return response;
   }
 
   // 이미지 압축
@@ -153,8 +115,8 @@ class SelectedImgNotifier extends StateNotifier<List<XFile>> {
   }
 
   // HTTP 응답 처리
-  Future<void> handleResponse(Response response, String action) async {
-    await ExceptionDio().handleHttpResponseCode(response.statusCode!, action);
+  Future<void> handleResponse(http.Response response, String action) async {
+    await ExceptionDio().handleHttpResponseCode(response.statusCode, action);
   }
 
   // Dio 오류 처리
