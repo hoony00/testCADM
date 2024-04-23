@@ -55,29 +55,11 @@ class _PickImgState extends ConsumerState<PickImg> {
   Widget build(BuildContext context) {
 
     return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            /// 갤러리 접근 버튼
-            InkWell(
-              onTap: () => pickImages(context),
-              child: const Icon(Icons.picture_as_pdf_outlined),
-            ),
-            SizedBox(width: 50.w),
-            InkWell(
-              onTap: () async {
-                XFile? selectedImages = await _picker.pickImage(source: ImageSource.camera);
-                if (selectedImages != null) {
-                  ref
-                      .watch(selectedImgProvider.notifier)
-                      .insertCameraImg(selectedImages);
-                }else{
-                  return;
-                }
-              },
-              child: const Icon(Icons.upload_outlined),
-            ),
             SizedBox(width: 5.w),
             Expanded(
               child: SingleChildScrollView(
@@ -122,32 +104,60 @@ class _PickImgState extends ConsumerState<PickImg> {
                           )
                       ],
                     ),
-                    ElevatedButton(
-                      onPressed: () =>
-                          ref.watch(selectedImgProvider.notifier).upload(),
-                      child: Text('업로드  '),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        // 모든 사진의 확장자 표시
-                        print(
-                            ref.watch(selectedImgProvider).map((e) => e.path));
-                      },
-                      child: Text('확장자 표시'),
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        // 모든 사진 제거
-                        ref.watch(selectedImgProvider.notifier).removeAll();
-                      },
-                      child: Text('삭제'),
-                    ),
+
                   ],
                 ),
               ),
             )
           ],
         ),
+     Column(
+       children: [
+         ElevatedButton(
+           onPressed: () =>
+               ref.watch(selectedImgProvider.notifier).upload(),
+           child: Text('업로드  '),
+         ),
+         ElevatedButton(
+           onPressed: () {
+             // 모든 사진의 확장자 표시
+             print(
+                 ref.watch(selectedImgProvider).map((e) => e.path));
+           },
+           child: Text('확장자 표시'),
+         ),
+         ElevatedButton(
+           onPressed: () {
+             // 모든 사진 제거
+             ref.watch(selectedImgProvider.notifier).removeAll();
+           },
+           child: Text('삭제'),
+         ),
+       ],
+     ),
+
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+          InkWell(
+            onTap: () => pickImages(context),
+            child: const Icon(Icons.photo, size: 60,),
+          ),
+          SizedBox(width: 50.w),
+          InkWell(
+            onTap: () async {
+              XFile? selectedImages = await _picker.pickImage(source: ImageSource.camera);
+              if (selectedImages != null) {
+                ref
+                    .watch(selectedImgProvider.notifier)
+                    .insertCameraImg(selectedImages);
+              }else{
+                return;
+              }
+            },
+            child: const Icon(Icons.camera_alt, size: 60,),
+          ),
+        ],)
       ],
     );
   }
