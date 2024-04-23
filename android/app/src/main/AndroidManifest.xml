@@ -5,8 +5,12 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <!-- 음성 녹음 -->
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <!-- 갤러리 읽기 -->
+    <!-- 갤러리 이미지 읽기 33버전 이하-->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <!-- 갤러리 이미지 읽기 33 버전 이상 -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+
+
     <!-- 갤러리 쓰기 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 

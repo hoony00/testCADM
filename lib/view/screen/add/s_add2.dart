@@ -19,10 +19,10 @@ class PickImg extends ConsumerStatefulWidget {
 class _PickImgState extends ConsumerState<PickImg> {
   final ImagePicker _picker = ImagePicker();
 
-  Future pickImages() async {
+  Future pickImages(BuildContext context) async {
     print("이미지 선택 시작");
 
-    await PermissionUtil.checkGalleryPermission2();
+    await PermissionUtil.checkGalleryPermission2(context);
 
       final List<XFile> selectedImages = await _picker.pickMultiImage();
       if (selectedImages != null && selectedImages.isNotEmpty) {
@@ -61,7 +61,7 @@ class _PickImgState extends ConsumerState<PickImg> {
           children: [
             /// 갤러리 접근 버튼
             InkWell(
-              onTap: () => pickImages(),
+              onTap: () => pickImages(context),
               child: const Icon(Icons.picture_as_pdf_outlined),
             ),
             SizedBox(width: 50.w),

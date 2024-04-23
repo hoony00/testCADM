@@ -8,22 +8,45 @@ import '../components/modal/custom_modal_one_button.dart';
 import '../font/pretendard.dart';
 
 class PermissionUtil {
+  static Future<PermissionStatus> checkGalleryPermission2(BuildContext context) async {
+    PermissionStatus status = Platform.isAndroid
+        ? await Permission.storage.status
+        : await Permission.photos.status;
 
-
-  static Future<PermissionStatus> checkGalleryPermission2() async {
-    PermissionStatus status = await Permission.photos.status;
-    print(" 현재 권한 상태 : $status");
+    print(" 현재 라이브러리 권한 상태 : $status");
 
     if (status.isDenied || status.isPermanentlyDenied) {
-      status = await Permission.photos.request();
+      PermissionStatus galleryPermissionStatus = PermissionStatus.denied; // 초기값 설정
+      if (Platform.isAndroid) {
+        galleryPermissionStatus = await checkAndroidPermission();
+      } else {
+        galleryPermissionStatus = await Permission.photos.request();
+      }
+
+      if (galleryPermissionStatus.isDenied || galleryPermissionStatus.isPermanentlyDenied) {
+        await showDialog(
+          context: context,
+          builder: (context) {
+            return CustomModalOneButton(
+              modalContent: const Text(
+                  "저장공간 접근 권한 동의를 허용해주셔야 \n이미지 이용이 가능합니다. \n원할한 서비스 이용을 위해 권한을 \n허용해주세요 :)"),
+              buttonText: const Text(
+                "설정창으로 이동",
+                style: Pretendard.wwhite_s16_w600,
+              ),
+              onButtonPressed: () {
+                openAppSettings();
+                Navigator.of(context).pop();
+              },
+            );
+          },
+        );
+      }
     }
 
     return status;
   }
 
-
-  /// 코드 이쪽으로 옮기고 권한 요청 페이지 , 플로우만 좀 다듬자 오케이 , 카카오톡 살짝 참고하자
-  /// 메디신 페이지, 갤러리보드 페이지, 갤러리보드 -> 카메라 선택 블록
   static Future<PermissionStatus> checkGalleryPermission(BuildContext context, bool mounted) async {
     PermissionStatus status = await Permission.photos.status;
     if (!mounted) return status;
@@ -62,67 +85,17 @@ class PermissionUtil {
 
     return status;
   }
-/*  // 갤러리보드 권한 체크 ( 운영체제 고려 )
-  static Future<void> checkGalleryPermission(BuildContext context, bool mounted) async {
-
-    late PermissionStatus status;
-
-
-    switch (Platform.operatingSystem) {
-      case 'android':
-        print("android");
-         status = await checkAndroidPermission();
-        break;
-      case 'ios':
-        print("ios");
-         status =  await Permission.storage.status;
-        break;
-      default:
-        break;
-    }
-
-    print("현재 status : $status");
-
-    if(status.isGranted) {
-      return;
-    }else {
-      final galleryPermissionStatus = Platform.isAndroid ?
-      await checkAndroidPermission() :
-      await Permission.storage.request();
-
-      if(galleryPermissionStatus.isPermanentlyDenied || galleryPermissionStatus.isDenied) {
-        await showDialog(
-          context: context,
-          builder: (context) {
-            return CustomModalOneButton(
-              modalContent: const Text(
-                  "저장공간 접근 권한 동의를 허용해주셔야 \n이미지 이용이 가능합니다. \n원할한 서비스 이용을 위해 권한을 \n허용해주세요 :)"),
-              buttonText: const Text(
-                "설정창으로 이동",
-                style: Pretendard.wwhite_s16_w600,
-              ),
-              onButtonPressed: () {
-                openAppSettings();
-                Navigator.of(context).pop();
-              },
-            );
-          },
-        );
-      }
-    }
-  }*/
 
   static Future<PermissionStatus> checkAndroidPermission() async {
     DeviceInfoPlugin plugin = DeviceInfoPlugin();
     AndroidDeviceInfo android = await plugin.androidInfo;
     if (android.version.sdkInt < 33) {
-     return await Permission.storage.request();
+      return await Permission.storage.request();
     } else {
       return await Permission.photos.request();
     }
   }
 
-// 카메라 권한 체크
   static Future<bool> checkCameraPermission(BuildContext context, bool mounted) async {
     // 현재 카메라 권한 상태 확인
     final permissionStatus = await Permission.camera.status;
