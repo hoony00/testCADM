@@ -3,8 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:test04dm/view/screen/add/s_check.dart';
 import 'package:test04dm/view/screen/add/s_upload.dart';
 
+import '../common/colors/color_palette.dart';
 import '../provider/page_index_provider.dart';
 import 'Navigation/bottom_navigation/w_convex_bottom.dart';
+import 'fab/w_floating_daangn_button.dart';
 
 class MainPage extends ConsumerStatefulWidget {
   const MainPage({super.key});
@@ -29,23 +31,21 @@ class MainScreenState extends ConsumerState<MainPage>
       Visibility(visible: indexProvider == 1, child: const CheckScreen()),
     ];
 
-    return Scaffold(
-/*      floatingActionButton: Visibility(
-        visible: indexProvider == 0,
-        child: FloatingActionButton(
-          onPressed: () {
-            print("floatingActionButton");
-          },
-          child: const Icon(Icons.add, color: ColorPalette.primaryColor),
-        ),
-      ),*/
-      body: SafeArea(
-        child: IndexedStack(
-          index: indexProvider,
-          children: body,
-        ),
+    return Material(
+      child: Stack(
+        children: [
+          Scaffold(
+            body: SafeArea(
+              child: IndexedStack(
+                index: indexProvider,
+                children: body,
+              ),
+            ),
+            bottomNavigationBar: const ConvexBottomNavigation(),
+          ),
+          FloatingDaangnButton(),
+        ],
       ),
-      bottomNavigationBar: const ConvexBottomNavigation(),
     );
   }
 }

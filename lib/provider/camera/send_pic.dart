@@ -12,6 +12,8 @@ import '../../view/screen/add/s_check.dart';
 class SelectedImgNotifier extends StateNotifier<List<XFile>> {
   SelectedImgNotifier() : super([]);
 
+  final String url = 'https://88c9-61-98-7-200.ngrok-free.app';
+
   // 이미지 추가
   void insertImg(List<XFile> list) {
     state = [...state, ...list];
@@ -82,15 +84,25 @@ class SelectedImgNotifier extends StateNotifier<List<XFile>> {
       return;
     }
 
-    debugPrint("${state.length}개의 이미지가 업로드 됩니다. 잠시만 기다려주세요.......");
+    for(var i = 0; i < formData.files.length; i++){
+      debugPrint("formData.files[$i] : ${formData.files[i]}");
+      debugPrint("formData.files[$i].key : ${formData.files[i].key}");
+      debugPrint("formData.files[$i].value : ${formData.files[i].value}");
+    }
+
+
+    debugPrint("${formData.files.length}개의 이미지가 업로드 됩니다. 잠시만 기다려주세요.......");
+
+
+
 
     try {
-      var imagesResponse = await dio.post(
-        'https://fec9-61-98-7-200.ngrok-free.app/sales/images',
+      Response imagesResponse = await dio.post(
+        '$url/sales/images',
         data: formData,
       );
 
-      print("imagesResponse : $imagesResponse");
+
 
       await handleResponse(imagesResponse, "이미지 저장");
 
@@ -104,7 +116,7 @@ class SelectedImgNotifier extends StateNotifier<List<XFile>> {
         debugPrint("일반 판매 게시물 업로드 중........ 잠시만 기다려주세요");
 
         var saleResponse = await dio.post(
-          'https://fec9-61-98-7-200.ngrok-free.app/sales',
+          '$url/sales',
           data: {
             "price": 1000,
             "mark": false,
