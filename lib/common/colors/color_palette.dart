@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 // 고정 값을 저장해놓고 값의 변동이 없는 것들만 클래스로 만들자
 class ColorPalette {
 
-  static const  primaryColor = Color.fromARGB(255, 206, 78, 225);
-  static const  secondColor = Color.fromARGB(255, 245, 75, 205);
+  static const  primaryColor = Color.fromARGB(255, 78, 129, 225);
+  static const  secondColor = Color.fromARGB(255, 75, 194, 245);
   static const  orangeColor = Color.fromARGB(255, 245, 140, 97);
 
   static const darkPrimaryColor = Color(0xFFA8D2A0);

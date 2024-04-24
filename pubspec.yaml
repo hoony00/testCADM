@@ -132,6 +132,20 @@ flutter:
     - assets/
     - assets/images/fab/
 
+  fonts:
+    - family: Pretendard
+      fonts:
+        - asset: assets/fonts/pretendard/Pretendard-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/pretendard/Pretendard-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/pretendard/Pretendard-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/pretendard/Pretendard-Light.ttf
+          weight: 300
+        - asset: assets/fonts/pretendard/Pretendard-Thin.ttf
+          weight: 100
+
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

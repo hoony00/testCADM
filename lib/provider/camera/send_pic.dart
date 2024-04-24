@@ -12,7 +12,7 @@ import '../../common/exception/exception.dart';
 class SelectedImgNotifier extends StateNotifier<List<XFile>> {
   SelectedImgNotifier() : super([]);
 
-  final String url = 'https://88c9-61-98-7-200.ngrok-free.app';
+  final String url = 'https://0d5e-61-98-7-200.ngrok-free.app';
   final ExceptionDio exceptionDio = ExceptionDio();
   var  uploadStatus = UploadStatus.idle;
 
@@ -49,12 +49,17 @@ class SelectedImgNotifier extends StateNotifier<List<XFile>> {
           debugPrint("<--이미지 업로드 성공 OK! -->");
 
           // 응답에서 이미지 URL 추출
-          var imageURL = response.body;
+          var imageURL = response.body.toString();
           imageURLs.add(imageURL);
         }
       }
 
       if(imageURLs.isNotEmpty){
+
+        //imageURLs 값 확인
+        print("imageURLs : $imageURLs");
+
+
         // 상품 등록
         await registerProduct(imageURLs);
       }
@@ -80,6 +85,7 @@ class SelectedImgNotifier extends StateNotifier<List<XFile>> {
       filename: 'saleIdx_$index.$imageType', // 확장자를 .jpg로 변경
     );
     request.files.add(multipartFile);
+
     var response = await http.Response.fromStream(await request.send());
     return response;
   }
@@ -157,7 +163,7 @@ class SelectedImgNotifier extends StateNotifier<List<XFile>> {
       await handleResponse(saleResponse, "상품 등록", isDioResponse: true);
 
       if(saleResponse.statusCode == 200){
-        state = [];
+        //state = [];
       }
 
     } catch (e) {

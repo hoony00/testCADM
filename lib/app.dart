@@ -5,7 +5,9 @@ import 'package:nav/nav.dart';
 import 'package:test04dm/common/extension/context_extension.dart';
 import 'package:test04dm/view/main_page.dart';
 
+
 import 'common/colors/color_palette.dart';
+import 'common/theme/theme.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -18,6 +20,7 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> with Nav, WidgetsBindingObserver {
+
   @override
   GlobalKey<NavigatorState> get navigatorKey => App.navigatorKey;
 
@@ -85,16 +88,7 @@ class _AppState extends State<App> with Nav, WidgetsBindingObserver {
       designSize: Size(width, height),
       child: MaterialApp.router(
         showPerformanceOverlay: false,
-        theme: ThemeData(
-          textTheme: Theme.of(context).textTheme.apply(
-                bodyColor: Colors.white,
-                displayColor: Colors.white,
-              ),
-          primarySwatch: Colors.blue,
-          primaryColor: ColorPalette.primaryColor,
-          brightness: Brightness.dark,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
+        theme: buildThemeData(context),
         //라우트 상태를 전달해주는 함수
         routeInformationProvider: _router.routeInformationProvider,
         // routeInformationParser에서 변환된 값을 어떤 라우트로 보여줄 지 정하는 함수
