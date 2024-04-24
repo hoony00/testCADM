@@ -11,6 +11,13 @@ class HomeScreen extends ConsumerStatefulWidget {
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('HomeScreen'),
+      ),
+      body: Center(
+        child: Text('HomeScreen'),
+      ),
+    );
   }
 }

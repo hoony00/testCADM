@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:test04dm/common/colors/color_palette.dart';
 import 'package:test04dm/common/font/pretendard.dart';
 
@@ -79,7 +80,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       onPressed: () {
 
         //페이지 이동
-        Navigator.pushNamed(context, '/loginCheck');
+        context.go('/loginCheck');
 
         // 버튼 클릭 시 처리할 코드 작성
         print('로그인 버튼 클릭됨');
@@ -112,7 +113,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         const Text('이미 계정이 있나요? '),
         GestureDetector(
           onTap: () {},
-          child: Text(
+          child: const Text(
             '로그인',
             style: TextStyle(
               color: Colors.blue,

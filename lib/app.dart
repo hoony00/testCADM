@@ -3,9 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nav/nav.dart';
 import 'package:test04dm/common/extension/context_extension.dart';
-import 'package:test04dm/view/join/s_join.dart';
 import 'package:test04dm/view/main_page.dart';
-import 'package:test04dm/view/screen/login/s_login.dart';
 import 'package:test04dm/view/screen/login/vo_login_check.dart';
 
 
@@ -77,21 +75,9 @@ class _AppState extends State<App> with Nav, WidgetsBindingObserver {
         builder: (context, state) => const MainPage(),
         routes: [
           GoRoute(
-            name: 'login',
-            path: '/login',
-            builder: (context, state) => const LoginScreen(),
-            routes: [
-              GoRoute(
-                name: 'loginCheck',
-                path: '/loginCheck',
-                builder: (context, state) => const LoginCheck(),
-              ),
-            ],
-          ),
-          GoRoute(
-            name: 'join',
-            path: '/join',
-            builder: (context, state) => const JoinScreen(),
+            name: 'loginCheck',
+            path: 'loginCheck',
+            builder: (context, state) => const LoginCheck(),
           ),
         ],
       ),
