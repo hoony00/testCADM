@@ -19,8 +19,11 @@ class FloatingDaangnButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final floatingButtonState = ref.watch(floatingButtonStateProvider);
     final isExpanded = floatingButtonState.isExpanded;
-    final isSmall = floatingButtonState.isSmall;
     final width = context.deviceWidth;
+
+    void onTapButton() {
+      ref.read(floatingButtonStateProvider.notifier).onTapButton();
+    }
 
     return Stack(
       children: [
@@ -33,6 +36,7 @@ class FloatingDaangnButton extends ConsumerWidget {
           ),
         ),
         Align(
+          // 오른쪽 아래
           alignment: Alignment.bottomRight,
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -41,9 +45,10 @@ class FloatingDaangnButton extends ConsumerWidget {
               AnimatedOpacity(
                 opacity: isExpanded ? 1 : 0,
                 duration: duration,
+                /// 확장된 컨테이너 UI
                 child: Container(
                   width: 190,
-                  padding: const EdgeInsets.all(15),
+                  padding: const EdgeInsets.all(10),
                   margin: const EdgeInsets.only(bottom: 10, right: 15),
                   decoration: BoxDecoration(
                     color: ColorPalette.primaryColor.withOpacity(0.9),
@@ -53,7 +58,6 @@ class FloatingDaangnButton extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       _floatItem('의료장비 판매신청', 'assets/images/fab/fab_01.png'),
-                      _floatItem('의료장비 경매신청', 'assets/images/fab/fab_02.png'),
                       _floatItem('의료장비 수배신청', 'assets/images/fab/fab_03.png'),
                     ],
                   ),
@@ -61,8 +65,7 @@ class FloatingDaangnButton extends ConsumerWidget {
               ),
               Tap(
                 onTap: () {
-                  ref.read(floatingButtonStateProvider.notifier).onTapButton();
-
+                  onTapButton();
                 },
                 child: AnimatedContainer(
                   duration: duration,
@@ -70,6 +73,7 @@ class FloatingDaangnButton extends ConsumerWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 18),
                   decoration: BoxDecoration(
                     color:
+                        ///동적 색상 변경
                     isExpanded
                         ?  ColorPalette.primaryColor.withOpacity(0.9)
                       :  ColorPalette.primaryColor,
@@ -78,9 +82,11 @@ class FloatingDaangnButton extends ConsumerWidget {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      AnimatedRotation(turns: isExpanded ? 0.125 : 0, duration: duration, child: const Icon(Icons.add)),
+                      ///동적 아이콘 변경
+                      AnimatedRotation(turns: isExpanded ? 0.125 : 0, duration: duration,
+                          child: const Icon(Icons.add)),
                       AnimatedWidthCollapse(
-                          visible: !isSmall,
+                          visible: !isExpanded,
                           duration: duration,
                           child: '글쓰기'.text.make()),
                     ],
@@ -89,17 +95,16 @@ class FloatingDaangnButton extends ConsumerWidget {
               ),
             ],
           ),
-        ),
+        ).pOnly(right: 15, bottom: 100),
       ],
     );
   }
 
   _floatItem(String title, String imagePath) {
     return Row(
-      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Image.asset(imagePath, width: 30),
-        const Width(8),
         title.text.make(),
       ],
     );

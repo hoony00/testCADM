@@ -6,7 +6,7 @@ import 'package:test04dm/view/fab/w_floating_daangn_button.state.dart';
 final floatingButtonStateProvider =
     StateNotifierProvider<FloatingButtonStateNotifier, FloatingButtonState>(
   (ref) => FloatingButtonStateNotifier(
-    const FloatingButtonState(false, false),
+    const FloatingButtonState(false),
   ),
 );
 
@@ -17,21 +17,16 @@ class FloatingButtonStateNotifier extends StateNotifier<FloatingButtonState> {
 
   void onTapButton() {
     final isExpanded = state.isExpanded;
-    final isSmall = state.isSmall;
 
-    state = state.copyWith(isExpanded: !state.isExpanded, isSmall: needToMakeButtonBigger ? false : true);
+    state = state.copyWith(isExpanded: !state.isExpanded);
 
     if(needToMakeButtonBigger){
       needToMakeButtonBigger = false;
     }
 
-    if(!isSmall && !isExpanded) {
+    if(!isExpanded) {
       needToMakeButtonBigger = true;
     }
-  }
-
-  void changeButtonSize(bool isSmall) {
-    state = state.copyWith(isSmall: isSmall);
   }
 }
 

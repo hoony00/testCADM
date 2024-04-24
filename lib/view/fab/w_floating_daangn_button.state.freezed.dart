@@ -17,7 +17,6 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$FloatingButtonState {
   bool get isExpanded => throw _privateConstructorUsedError;
-  bool get isSmall => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $FloatingButtonStateCopyWith<FloatingButtonState> get copyWith =>
@@ -30,7 +29,7 @@ abstract class $FloatingButtonStateCopyWith<$Res> {
           FloatingButtonState value, $Res Function(FloatingButtonState) then) =
       _$FloatingButtonStateCopyWithImpl<$Res, FloatingButtonState>;
   @useResult
-  $Res call({bool isExpanded, bool isSmall});
+  $Res call({bool isExpanded});
 }
 
 /// @nodoc
@@ -47,16 +46,11 @@ class _$FloatingButtonStateCopyWithImpl<$Res, $Val extends FloatingButtonState>
   @override
   $Res call({
     Object? isExpanded = null,
-    Object? isSmall = null,
   }) {
     return _then(_value.copyWith(
       isExpanded: null == isExpanded
           ? _value.isExpanded
           : isExpanded // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isSmall: null == isSmall
-          ? _value.isSmall
-          : isSmall // ignore: cast_nullable_to_non_nullable
               as bool,
     ) as $Val);
   }
@@ -70,7 +64,7 @@ abstract class _$$FloatingButtonStateImplCopyWith<$Res>
       __$$FloatingButtonStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool isExpanded, bool isSmall});
+  $Res call({bool isExpanded});
 }
 
 /// @nodoc
@@ -85,16 +79,11 @@ class __$$FloatingButtonStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? isExpanded = null,
-    Object? isSmall = null,
   }) {
     return _then(_$FloatingButtonStateImpl(
       null == isExpanded
           ? _value.isExpanded
           : isExpanded // ignore: cast_nullable_to_non_nullable
-              as bool,
-      null == isSmall
-          ? _value.isSmall
-          : isSmall // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -103,16 +92,14 @@ class __$$FloatingButtonStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$FloatingButtonStateImpl implements _FloatingButtonState {
-  const _$FloatingButtonStateImpl(this.isExpanded, this.isSmall);
+  const _$FloatingButtonStateImpl(this.isExpanded);
 
   @override
   final bool isExpanded;
-  @override
-  final bool isSmall;
 
   @override
   String toString() {
-    return 'FloatingButtonState(isExpanded: $isExpanded, isSmall: $isSmall)';
+    return 'FloatingButtonState(isExpanded: $isExpanded)';
   }
 
   @override
@@ -121,12 +108,11 @@ class _$FloatingButtonStateImpl implements _FloatingButtonState {
         (other.runtimeType == runtimeType &&
             other is _$FloatingButtonStateImpl &&
             (identical(other.isExpanded, isExpanded) ||
-                other.isExpanded == isExpanded) &&
-            (identical(other.isSmall, isSmall) || other.isSmall == isSmall));
+                other.isExpanded == isExpanded));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isExpanded, isSmall);
+  int get hashCode => Object.hash(runtimeType, isExpanded);
 
   @JsonKey(ignore: true)
   @override
@@ -137,13 +123,11 @@ class _$FloatingButtonStateImpl implements _FloatingButtonState {
 }
 
 abstract class _FloatingButtonState implements FloatingButtonState {
-  const factory _FloatingButtonState(
-      final bool isExpanded, final bool isSmall) = _$FloatingButtonStateImpl;
+  const factory _FloatingButtonState(final bool isExpanded) =
+      _$FloatingButtonStateImpl;
 
   @override
   bool get isExpanded;
-  @override
-  bool get isSmall;
   @override
   @JsonKey(ignore: true)
   _$$FloatingButtonStateImplCopyWith<_$FloatingButtonStateImpl> get copyWith =>
