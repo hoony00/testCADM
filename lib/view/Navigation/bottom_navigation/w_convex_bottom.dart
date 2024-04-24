@@ -25,18 +25,25 @@ class _ConvexBottomNavigationState
     return ConvexAppBar.badge(
       {
       },
+        gradient: const LinearGradient(
+          colors: [ColorPalette.primaryColor, ColorPalette.secondColor],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+      top: -20,
+      style: TabStyle.react,
       badgeMargin: EdgeInsets.only(left: height * 0.028, bottom: height * 0.04),
-      style: TabStyle.titled,
       backgroundColor: ColorPalette.secondColor,
       elevation: 4,
-      height: height * 0.08,
-      curve: Curves.easeOutQuart,
-      top: -30,
+// 버튼 모양
 
 
       items: const [
-        TabItem(icon: Icons.more_time_outlined, title: '테스트'),
-        TabItem(icon: Icons.sports_gymnastics_outlined, title: '텟으트'),
+        TabItem(icon: Icons.more_time_outlined, title: '업로드'),
+        TabItem(icon: Icons.sports_gymnastics_outlined, title: '다운로드'),
+        TabItem(icon: Icons.home, title: 'home'),
+        TabItem(icon: Icons.login, title: '로그인'),
+        TabItem(icon: Icons.join_full, title: '회원가입'),
       ],
 
       // 초기값

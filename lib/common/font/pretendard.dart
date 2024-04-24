@@ -32,6 +32,7 @@ class Pretendard {
   static const wPrimaryColor_s22_w700 = CustomTextStyle(fontFamily: fontFamily, color: ColorPalette.primaryColor, fontSize: 22.0, fontWeight: FontWeight.w700);
   static const wPrimaryColor_s24_w700 = CustomTextStyle(fontFamily: fontFamily, color: ColorPalette.primaryColor, fontSize: 24.0, fontWeight: FontWeight.w700);
   static const wPrimaryColor_s28_w700 = CustomTextStyle(fontFamily: fontFamily, color: ColorPalette.primaryColor, fontSize: 28.0, fontWeight: FontWeight.w700);
+  static const wPrimaryColor_s50_w900 = CustomTextStyle(fontFamily: fontFamily, color: ColorPalette.primaryColor, fontSize: 50.0, fontWeight: FontWeight.w900);
   static const wPrimaryColor_s60_w700 = CustomTextStyle(fontFamily: fontFamily, color: ColorPalette.primaryColor, fontSize: 60.0, fontWeight: FontWeight.w700);
   static const wPrimaryColor_s60_w500 = CustomTextStyle(fontFamily: fontFamily, color: ColorPalette.primaryColor, fontSize: 60.0, fontWeight: FontWeight.w500);
 
