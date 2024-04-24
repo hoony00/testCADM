@@ -9,7 +9,7 @@ import '../provider/page_index_provider.dart';
 import 'Navigation/bottom_navigation/w_convex_bottom.dart';
 import 'fab/w_floating_daangn_button.dart';
 import 'home/s_home.dart';
-import 'join/s_join.dart';
+import 'join/s_verification.dart';
 
 class MainPage extends ConsumerStatefulWidget {
   const MainPage({super.key});
@@ -34,7 +34,7 @@ class MainScreenState extends ConsumerState<MainPage>
       Visibility(visible: indexProvider == 1, child: const CheckScreen()),
       Visibility(visible: indexProvider == 2, child: const HomeScreen()),
       Visibility(visible: indexProvider == 3, child: const LoginScreen()),
-      Visibility(visible: indexProvider == 4, child:  JoinScreen()),
+      Visibility(visible: indexProvider == 4, child:  VerificationScreen()),
     ];
 
     return Material(

@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:test04dm/common/colors/color_palette.dart';
 import 'package:test04dm/common/font/pretendard.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -16,39 +17,34 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            children: [
-              // 첫 번째 컬럼 (가운데 고정)
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    _buildTitle(),
-                    _buildSunTilte(),
-                    const SizedBox(height: 30.0),
-                    _buildDescrition(),
-                  ],
-                ),
-              ),
-
-              // 두 번째 컬럼 (하단 고정)
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Column(
-                  children: [
-                    _buildLoginButton(),
-                    const SizedBox(height: 10.0),
-                    _buildLoginText(),
-                    const SizedBox(height: 10.0),
-                  ],
-                ),
-              ),
-            ],
+      body: Column(
+        children: [
+          // 첫 번째 컬럼 (가운데 고정)
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _buildTitle(),
+                _buildSunTilte(),
+                const SizedBox(height: 30.0),
+                _buildDescrition(),
+              ],
+            ),
           ),
-        ),
+
+          // 두 번째 컬럼 (하단 고정)
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Column(
+              children: [
+                _buildLoginButton(),
+                const SizedBox(height: 10.0),
+                _buildLoginText(),
+                const SizedBox(height: 10.0),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -101,8 +97,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           fontWeight: FontWeight.w600,
         ),
       ),
-
-    );
+    ).p20();
   }
 
 
