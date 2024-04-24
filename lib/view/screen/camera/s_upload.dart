@@ -9,7 +9,7 @@ import 'package:permission_handler/permission_handler.dart';
 import '../../../common/permission/permission_util.dart';
 import '../../../provider/camera/send_pic.dart';
 import '../../../provider/enum/upload_status.dart';
-import '../../../widget/loding_container.dart';
+import '../../../widget/w_loding_container.dart';
 
 class PickImgScreen extends ConsumerStatefulWidget {
   const PickImgScreen({super.key});

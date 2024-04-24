@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nav/nav.dart';
 import 'package:test04dm/common/extension/context_extension.dart';
+import 'package:test04dm/view/join/s_businessCheck_1.dart';
 import 'package:test04dm/view/main_page.dart';
 import 'package:test04dm/view/screen/login/vo_login_check.dart';
 
@@ -13,18 +14,12 @@ import 'common/theme/theme.dart';
 class App extends StatefulWidget {
   const App({super.key});
 
-  /// 글로벌 키
-  static final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
   @override
   State<App> createState() => _AppState();
 }
 
-class _AppState extends State<App> with Nav, WidgetsBindingObserver {
-
-  @override
-  GlobalKey<NavigatorState> get navigatorKey => App.navigatorKey;
-
+class _AppState extends State<App> with  WidgetsBindingObserver {
 
   @override
   void initState() {
@@ -78,6 +73,13 @@ class _AppState extends State<App> with Nav, WidgetsBindingObserver {
             name: 'loginCheck',
             path: 'loginCheck',
             builder: (context, state) => const LoginCheck(),
+            routes: [
+              GoRoute(
+                name: 'BusinessCheck1',
+                path: 'BusinessCheck1',
+                builder: (context, state) => const BusinessCheck1(),
+              ),
+            ],
           ),
         ],
       ),

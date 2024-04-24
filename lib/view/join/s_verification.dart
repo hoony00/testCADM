@@ -7,19 +7,21 @@ import 'package:velocity_x/velocity_x.dart';
 
 import '../../common/colors/color_palette.dart';
 import '../../common/font/pretendard.dart';
+import '../../widget/w_loding_container.dart';
 
 class VerificationScreen extends ConsumerStatefulWidget {
   const VerificationScreen({super.key});
 
   @override
-  ConsumerState<VerificationScreen> createState() => _HomeScreenState();
+  ConsumerState<VerificationScreen> createState() => _VerificationScreenState();
 }
 
-class _HomeScreenState extends ConsumerState<VerificationScreen> {
+class _VerificationScreenState extends ConsumerState<VerificationScreen> {
 
   late TextEditingController _phoneController;
   late TextEditingController _authNumberController;
   bool isVisibilityAuthNumber = false;
+  bool isUploading = false;
 
   @override
   void initState() {
@@ -32,14 +34,21 @@ class _HomeScreenState extends ConsumerState<VerificationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      body: Stack(
         children: [
-          Height(50),
-          _buildSunTilte(),
-          _buildPhoneNumber(),
-          _buildAuthNumber(),
-          _buildCheckButton(),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Height(50),
+              _buildSunTilte(),
+              _buildPhoneNumber(),
+              _buildAuthNumber(),
+              _buildCheckButton(),
+            ],
+          ),
+          isUploading
+              ? const LoadingContainer(text: '정보 확인 중...')
+              : const SizedBox(),
         ],
       ),
     );
@@ -129,8 +138,23 @@ class _HomeScreenState extends ConsumerState<VerificationScreen> {
       visible: isVisibilityAuthNumber,
       child: ElevatedButton(
         onPressed: () {
+
+          setState(() {
+            isUploading = true;
+          });
+          //2초간 딜레이
+          Future.delayed(const Duration(seconds: 2), () {
+            setState(() {
+              isUploading = false;
+            });
+            context.goNamed('BusinessCheck1');
+
+          });
+
+
           //페이지 이동
-          context.go('/loginCheck');
+
+
           // 버튼 클릭 시 처리할 코드 작성
           print('로그인 버튼 클릭됨');
         },
@@ -143,7 +167,7 @@ class _HomeScreenState extends ConsumerState<VerificationScreen> {
           ),
         ),
         child: const Text(
-          '시작하기',
+          '다음',
           style: TextStyle(
             color: Colors.white,
             fontSize: 20,

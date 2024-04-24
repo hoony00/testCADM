@@ -61,6 +61,7 @@ class Pretendard {
   static const wblack_s22_w700 = CustomTextStyle(fontFamily: fontFamily, color: ColorPalette.black, fontSize: 22.0, fontWeight: FontWeight.w700);
   static const wblack_s24_w700 = CustomTextStyle(fontFamily: fontFamily, color: ColorPalette.black, fontSize: 24.0, fontWeight: FontWeight.w700);
   static const wblack_s28_w700 = CustomTextStyle(fontFamily: fontFamily, color: ColorPalette.black, fontSize: 28.0, fontWeight: FontWeight.w700);
+  static const wblack_s40_w700 = CustomTextStyle(fontFamily: fontFamily, color: ColorPalette.black, fontSize: 40.0, fontWeight: FontWeight.w700);
   static const wblack_s60_w700 = CustomTextStyle(fontFamily: fontFamily, color: ColorPalette.black, fontSize: 60.0, fontWeight: FontWeight.w700);
   static const wblack_s60_w500 = CustomTextStyle(fontFamily: fontFamily, color: ColorPalette.black, fontSize: 60.0, fontWeight: FontWeight.w500);
 
@@ -78,6 +79,7 @@ class Pretendard {
   static const wwhite_s14_w700 = CustomTextStyle(fontFamily: fontFamily, color: ColorPalette.white, fontSize: 14.0, fontWeight: FontWeight.w700);
   static const wwhite_s16_w500 = CustomTextStyle(fontFamily: fontFamily, color: ColorPalette.white, fontSize: 16.0, fontWeight: FontWeight.w500);
   static const wwhite_s16_w600 = CustomTextStyle(fontFamily: fontFamily, color: ColorPalette.white, fontSize: 16.0, fontWeight: FontWeight.w600);
+  static const wwhite_s16_w900 = CustomTextStyle(fontFamily: fontFamily, color: ColorPalette.white, fontSize: 16.0, fontWeight: FontWeight.w900);
   static const wwhite_s18_w700 = CustomTextStyle(fontFamily: fontFamily, color: ColorPalette.white, fontSize: 18.0, fontWeight: FontWeight.w700);
   static const wwhite_s20_w500 = CustomTextStyle(fontFamily: fontFamily, color: ColorPalette.white, fontSize: 20.0, fontWeight: FontWeight.w500);
   static const wwhite_s20_w700 = CustomTextStyle(fontFamily: fontFamily, color: ColorPalette.white, fontSize: 20.0, fontWeight: FontWeight.w700);
@@ -97,13 +99,8 @@ class Pretendard {
 
 
 
-  static const wblue_s14_w500 = CustomTextStyle(fontFamily: fontFamily, color: ColorPalette.middleBlue, fontSize: 14.0, fontWeight: FontWeight.w500);
 
-  static const wsubprimary_s50_w600 = CustomTextStyle(fontFamily: fontFamily, color: ColorPalette.subPrimaryColor, fontSize: 50.0, fontWeight: FontWeight.w600);
 
-  static const wmiddlepink_s12_w500 = CustomTextStyle(fontFamily: fontFamily, color: ColorPalette.middlePink, fontSize: 12.0, fontWeight: FontWeight.w500);
 
-  static const worange_s12_w700 = CustomTextStyle(fontFamily: fontFamily, color: ColorPalette.orange, fontSize: 12.0, fontWeight: FontWeight.w700);
-  static const worange_s14_w700 = CustomTextStyle(fontFamily: fontFamily, color: ColorPalette.orange, fontSize: 14.0, fontWeight: FontWeight.w700);
 
 }

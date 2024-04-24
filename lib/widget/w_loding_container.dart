@@ -14,6 +14,9 @@ class LoadingContainer extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            // 1. SpinKitFadingCircle
+            // 2. SpinKitThreeBounce
+            // 3. SpinKitThreeInOut
             const SpinKitThreeBounce(
               color: Colors.white,
               size: 25.0,
