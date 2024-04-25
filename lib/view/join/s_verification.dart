@@ -9,6 +9,7 @@ import 'package:velocity_x/velocity_x.dart';
 import '../../common/colors/color_palette.dart';
 import '../../common/font/pretendard.dart';
 import '../../widget/w_loding_container.dart';
+import '../../widget/w_title.dart';
 
 class VerificationScreen extends ConsumerStatefulWidget {
   const VerificationScreen({super.key});
@@ -41,7 +42,7 @@ class _VerificationScreenState extends ConsumerState<VerificationScreen> {
             children: [
               const CustomAppbar(isBack: true).pOnly(top: 20),
               const Height(50),
-              _buildSunTilte(),
+              const JoinTitle(title: '반가워요! \n본인확인을 해주세요.'),
               _buildPhoneNumber(),
               _buildAuthNumber(),
               _buildCheckButton(),
@@ -52,19 +53,9 @@ class _VerificationScreenState extends ConsumerState<VerificationScreen> {
       ),
     );
   }
-
-  Widget _buildSunTilte() {
-    return const Text(
-      '반가워요! \n본인확인을 해주세요.',
-      style: Pretendard.wblack_s24_w700,
-    ).pOnly(left: 16);
-  }
-
-
+  
   Widget _buildPhoneNumber() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      mainAxisSize: MainAxisSize.min,
       children: [
         Container(
           width: context.screenWidth * 0.54,
@@ -148,10 +139,6 @@ class _VerificationScreenState extends ConsumerState<VerificationScreen> {
             context.goNamed('BusinessCheck1');
 
           });
-
-
-          //페이지 이동
-
 
           // 버튼 클릭 시 처리할 코드 작성
           print('로그인 버튼 클릭됨');
