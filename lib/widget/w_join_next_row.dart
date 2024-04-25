@@ -3,7 +3,8 @@ import 'package:test04dm/common/font/pretendard.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class JoinNextButtonRow extends StatelessWidget {
-  const JoinNextButtonRow({super.key});
+  final String nextScreenName;
+  const JoinNextButtonRow({super.key, required this.nextScreenName});
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +53,6 @@ class JoinNextButtonRow extends StatelessWidget {
           ).p8(),
         ),
       ],
-    ).p8();
+    ).pOnly(top: 20.0, left: 20.0, right: 20.0, bottom: 90.0);
   }
 }
