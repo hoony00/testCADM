@@ -10,7 +10,7 @@ class ColorPalette {
   static const  secondColor = Color.fromARGB(255, 75, 149, 245);
   static const  textColor = Color.fromARGB(255, 18, 18, 18);
   static const  iconColor = Color.fromARGB(255, 106, 75, 245);
-  static const  orangeColor = Color.fromARGB(255, 245, 140, 97);
+  static const  backgroundIndicatorColor = Color(0xFFB6BFC7);
 
   static const darkPrimaryColor = Color(0xFFA8D2A0);
 

@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nav/nav.dart';
 import 'package:test04dm/common/extension/context_extension.dart';
-import 'package:test04dm/view/join/s_businessCheck_1.dart';
+import 'package:test04dm/view/join/s_member_type_selection.dart';
 import 'package:test04dm/view/main_page.dart';
 import 'package:test04dm/view/screen/login/vo_login_check.dart';
 
@@ -77,7 +77,7 @@ class _AppState extends State<App> with  WidgetsBindingObserver {
               GoRoute(
                 name: 'BusinessCheck1',
                 path: 'BusinessCheck1',
-                builder: (context, state) => const BusinessCheck1(),
+                builder: (context, state) =>  MemberTypeSelectionScreen(),
               ),
             ],
           ),

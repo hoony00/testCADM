@@ -6,15 +6,16 @@ import 'package:test04dm/widget/w_height_and_width.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../common/font/pretendard.dart';
+import '../../widget/w_linear_progress_indicator.dart';
 
-class BusinessCheck1 extends ConsumerStatefulWidget {
-  const BusinessCheck1({super.key});
+class MemberTypeSelectionScreen extends ConsumerStatefulWidget {
+  const MemberTypeSelectionScreen({super.key});
 
   @override
-  ConsumerState<BusinessCheck1> createState() => _BusinessCheck1State();
+  ConsumerState<MemberTypeSelectionScreen> createState() => _MemberTypeSelectionScreenState();
 }
 
-class _BusinessCheck1State extends ConsumerState<BusinessCheck1> {
+class _MemberTypeSelectionScreenState extends ConsumerState<MemberTypeSelectionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,35 +23,10 @@ class _BusinessCheck1State extends ConsumerState<BusinessCheck1> {
       body: Column(
         children: [
 ///todo : https://pub.dev/packages/flutter_animate 등 글자에 색상넣기, 잘 정리된 패키지에도 비슷한 기능 있음 !
-
-          Container(
-            width: 312,
-            height: 4,
-            padding: const EdgeInsets.only(right: 234),
-            clipBehavior: Clip.antiAlias,
-            decoration: BoxDecoration(
-              color: Colors.black.withOpacity(0.08),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  width: 78,
-                  height: 4,
-                  decoration: BoxDecoration(
-                      color: Color(0xFF0052FF)),
-                ),
-              ],
-            ),
-          ),
-
+          const CustomLinearIndicator(value: 0.3),
           _buildTitle(),
-
           const Height(500),
           _buildButton(),
-
         ],
       ),
     );
