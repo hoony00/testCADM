@@ -83,7 +83,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       },
       style: ElevatedButton.styleFrom(
         backgroundColor: ColorPalette.primaryColor,
-        minimumSize: Size(400, 50),
+        minimumSize: const Size(400, 50),
         padding: const EdgeInsets.all(15.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),

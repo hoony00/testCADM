@@ -8,6 +8,7 @@ import 'package:velocity_x/velocity_x.dart';
 
 import '../../common/colors/color_palette.dart';
 import '../../common/font/pretendard.dart';
+import '../../widget/w_custom_textf.dart';
 import '../../widget/w_loding_container.dart';
 import '../../widget/w_title.dart';
 
@@ -19,7 +20,6 @@ class VerificationScreen extends ConsumerStatefulWidget {
 }
 
 class _VerificationScreenState extends ConsumerState<VerificationScreen> {
-
   late TextEditingController _phoneController;
   late TextEditingController _authNumberController;
   bool isVisibilityAuthNumber = false;
@@ -45,7 +45,8 @@ class _VerificationScreenState extends ConsumerState<VerificationScreen> {
               const JoinTitle(title: '반가워요! \n본인확인을 해주세요.'),
               _buildPhoneNumber(),
               _buildAuthNumber(),
-              _buildCheckButton(),
+              _buildCheckButton(
+                  _phoneController.text, _authNumberController.text),
             ],
           ),
           LoadingContainer(text: '정보 확인 중...', isVisible: isUploading),
@@ -57,28 +58,12 @@ class _VerificationScreenState extends ConsumerState<VerificationScreen> {
   Widget _buildPhoneNumber() {
     return Row(
       children: [
-        Container(
-          width: context.screenWidth * 0.54,
-          height: context.screenWidth * 0.13,
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: Colors.grey[300]!,
-            ),
-            borderRadius: BorderRadius.circular(10),
-            color: Colors.white70,
-          ),
-
-          child: TextFormField(
-            /// todo : 포커스 받으면 테두리 색상 변경
-            controller: _phoneController,
-            keyboardType: TextInputType.phone,
-            decoration: const InputDecoration(
-              hintText: '휴대폰 번호 입력',
-              border: InputBorder.none,
-            ),
-          ).pOnly(left: 16),
-        ).p16(),
-
+        CustomTextField(
+          controller: _phoneController,
+          hintText: '휴대폰 번호 입력',
+          keyboardType: TextInputType.phone,
+          width: 0.53,
+        ),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(
@@ -92,7 +77,7 @@ class _VerificationScreenState extends ConsumerState<VerificationScreen> {
               isVisibilityAuthNumber = true;
             });
           },
-          child:  const Text('인증번호 발송', style:  Pretendard.wblack2_s16_w500),
+          child: const Text('인증번호 발송', style: Pretendard.wblack2_s16_w500),
         ),
       ],
     );
@@ -109,7 +94,6 @@ class _VerificationScreenState extends ConsumerState<VerificationScreen> {
           borderRadius: BorderRadius.circular(10),
           color: Colors.white70,
         ),
-
         child: TextField(
           //밑에 라인 제거
           controller: _authNumberController,
@@ -123,11 +107,13 @@ class _VerificationScreenState extends ConsumerState<VerificationScreen> {
     );
   }
 
-  Widget _buildCheckButton() {
+  Widget _buildCheckButton(String phone, String authNumber) {
     return Visibility(
       visible: isVisibilityAuthNumber,
       child: ElevatedButton(
         onPressed: () {
+          print('다음 버튼 클릭 phone: $phone, authNumber: $authNumber');
+
           setState(() {
             isUploading = true;
           });
@@ -137,11 +123,7 @@ class _VerificationScreenState extends ConsumerState<VerificationScreen> {
               isUploading = false;
             });
             context.goNamed('MemberTypeSelectionScreen');
-
           });
-
-          // 버튼 클릭 시 처리할 코드 작성
-          print('로그인 버튼 클릭됨');
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: ColorPalette.primaryColor,

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:nav/nav.dart';
 import 'package:test04dm/common/extension/context_extension.dart';
 import 'package:test04dm/view/join/s_dealer_input_info.dart';
+import 'package:test04dm/view/join/s_doctor_input_info.dart';
 import 'package:test04dm/view/join/s_doctor_select_type.dart';
 import 'package:test04dm/view/join/s_member_type_selection.dart';
 import 'package:test04dm/view/main_page.dart';
@@ -85,6 +86,13 @@ class _AppState extends State<App> with  WidgetsBindingObserver {
                     name: 'doctor_select_type',
                     path: 'doctor_select_type',
                     builder: (context, state) =>  DoctorSelectTypeScreen(),
+                    routes: [
+                      GoRoute(
+                        name: 'doctor_input_info',
+                        path: 'doctor_input_info',
+                        builder: (context, state) =>  DoctorInputScreen(),
+                      ),
+                    ],
                   ),
                   GoRoute(
                     name: 'dealer_input_info',
