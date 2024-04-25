@@ -9,6 +9,7 @@ import '../../widget/w_join_next_row.dart';
 import '../../widget/w_join_select_row.dart';
 import '../../widget/w_linear_progress_indicator.dart';
 import '../../widget/w_title.dart';
+import '../../widget/w_value_check_button.dart';
 
 class MemberTypeSelectionScreen extends StatefulWidget {
   const MemberTypeSelectionScreen({Key? key}) : super(key: key);
@@ -52,6 +53,7 @@ class _MemberTypeSelectionScreenState extends State<MemberTypeSelectionScreen> {
             },
           ),
 
+          ValueCheckButton(),
           Spacer(),
           // 다음 버튼
           JoinNextButtonRow(
