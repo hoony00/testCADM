@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:test04dm/model/Enum/member_type.dart'; // Enum을 import합니다.
 import 'package:test04dm/provider/enum/page_type.dart';
@@ -56,10 +57,9 @@ class _MemberTypeSelectionScreenState extends State<MemberTypeSelectionScreen> {
           ),
 
           //  ValueCheckButton(value1: selectedMemberType,),
-          const Spacer(),
-          // 다음 버튼
 
           JoinNextButtonRow(
+            height: 35.h,
             pageType: PageType.memberType,
             onSelect: () {
               if (selectedMemberType == MemberType.doctor) {
