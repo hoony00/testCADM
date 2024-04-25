@@ -71,7 +71,7 @@ class _PickImgState extends ConsumerState<PickImgScreen> {
     setState(() {
       isUploading = true;
     });
-    await ref.watch(selectedImgProvider.notifier).upload();
+    await ref.watch(selectedImgProvider.notifier).uploadProductImages();
     setState(() {
       isUploading = false;
     });

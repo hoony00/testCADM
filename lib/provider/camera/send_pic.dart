@@ -5,7 +5,6 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
-import 'package:test04dm/provider/enum/upload_status.dart';
 
 import '../../common/exception/exception.dart';
 
@@ -14,11 +13,41 @@ class SelectedImgNotifier extends StateNotifier<List<XFile>> {
 
   final String url = 'https://0d5e-61-98-7-200.ngrok-free.app';
   final ExceptionDio exceptionDio = ExceptionDio();
-  var  uploadStatus = UploadStatus.idle;
 
 
-  // 이미지 업로드
-  Future<void> upload() async {
+  //단일 이미지 업로드
+  Future<void> uploadSingleImage(XFile file) async {
+    try {
+      var imageType = file.path.split('.').last;
+      var compressedFile = await compressImage(file.path, imageType);
+
+      if (compressedFile == null) {
+        debugPrint("압축 파일이 null입니다.");
+        return;
+      }
+
+      var response = await uploadImage(compressedFile, 0, imageType);
+      await handleResponse(response, "이미지 저장", isDioResponse: response is Response);
+
+      if (response.statusCode == 200) {
+        debugPrint("<--이미지 업로드 성공 OK! -->");
+
+        var imageURL = response.body.toString();
+        // 이미지 URL을 사용하여 권한 등록
+        await registerBusiness(imageURL);
+      }
+    } catch (e) {
+      if (e is DioException) {
+        await handleDioError(e);
+      } else {
+        debugPrint("알 수 없는 오류: $e");
+      }
+    }
+  }
+
+
+  // 상품 이미지 업로드
+  Future<void> uploadProductImages() async {
     if (state.isEmpty) {
       debugPrint("이미지가 없습니다.");
       return;
@@ -27,8 +56,6 @@ class SelectedImgNotifier extends StateNotifier<List<XFile>> {
     debugPrint("========== 사진 업로드 시작 ==========");
 
     try {
-      uploadStatus = UploadStatus.uploading;
-      print("로딩 시작 uploadStatus : $uploadStatus");
 
       List<String> imageURLs = [];
       for (var i = 0; i < state.length; i++) {
@@ -90,27 +117,7 @@ class SelectedImgNotifier extends StateNotifier<List<XFile>> {
     return response;
   }
 
-  // 이미지 추가
-  void insertImg(List<XFile> list) {
-    state = [...state, ...list];
-  }
 
-  // 카메라 이미지 추가
-  void insertCameraImg(XFile file) {
-    state = [...state, file];
-  }
-
-  // 이미지 삭제
-  void removeImg(int idx) {
-    if (idx >= 0 && idx < state.length) {
-      state = List<XFile>.from(state)..removeAt(idx);
-    }
-  }
-
-  // 전체 이미지 삭제
-  void removeAll() {
-    state = [];
-  }
 
   // 확장자 제거
   String removeExtension(String path) {
@@ -163,7 +170,7 @@ class SelectedImgNotifier extends StateNotifier<List<XFile>> {
       await handleResponse(saleResponse, "상품 등록", isDioResponse: true);
 
       if(saleResponse.statusCode == 200){
-        //state = [];
+        state = [];
       }
 
     } catch (e) {
@@ -174,8 +181,35 @@ class SelectedImgNotifier extends StateNotifier<List<XFile>> {
       }
     }
 
-    uploadStatus = UploadStatus.idle;
-    print("로딩 끝 uploadStatus : $uploadStatus");
+  }
+
+  // 이미지 업로드 후 거래권한 등록
+  Future<void> registerBusiness(String imageURLs) async {
+    try {
+      var dio = Dio();
+
+      // 상품 등록 요청
+      Response saleResponse = await dio.post(
+        '$url/sales',
+        data: {
+
+        },
+      );
+
+      await handleResponse(saleResponse, "권한 등록", isDioResponse: true);
+
+      if(saleResponse.statusCode == 200){
+        state = [];
+      }
+
+    } catch (e) {
+      if (e is DioException) {
+        await handleDioError(e);
+      } else {
+        debugPrint("알 수 없는 오류: $e");
+      }
+    }
+
   }
 
   // HTTP 응답 처리
@@ -190,6 +224,32 @@ class SelectedImgNotifier extends StateNotifier<List<XFile>> {
   // Dio 오류 처리
   Future<void> handleDioError(DioException e) async {
     await exceptionDio.handleDioError(e);
+  }
+
+  // 이미지 추가
+  void insertImg(List<XFile> list) {
+    state = [...state, ...list];
+  }
+
+  void insertOneImg(XFile file) {
+    state = [file];
+  }
+
+  // 카메라 이미지 추가
+  void insertCameraImg(XFile file) {
+    state = [...state, file];
+  }
+
+  // 이미지 삭제
+  void removeImg(int idx) {
+    if (idx >= 0 && idx < state.length) {
+      state = List<XFile>.from(state)..removeAt(idx);
+    }
+  }
+
+  // 전체 이미지 삭제
+  void removeAll() {
+    state = [];
   }
 
 }

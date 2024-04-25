@@ -30,7 +30,7 @@ class ColorPalette {
   static const  mediumBlue = Color.fromARGB(255, 60, 140, 180);
   static const  darkOrange = Color.fromARGB(255, 222, 112, 48);
   static const  faleBlue = Color.fromARGB(255, 44, 44, 44);
-  static const  brightBlue = Color.fromARGB(255, 123, 182, 212);
+  static const  brightBlue = Color(0xDDE5F6FF);
   static const  salmon = Color(0xffff6666);
 
 
