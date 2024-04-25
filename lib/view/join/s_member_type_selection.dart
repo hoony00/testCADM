@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:test04dm/model/Enum/member_type.dart'; // Enum을 import합니다.
+import 'package:test04dm/provider/enum/page_type.dart';
 import 'package:test04dm/widget/w_height_and_width.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -53,11 +55,19 @@ class _MemberTypeSelectionScreenState extends State<MemberTypeSelectionScreen> {
             },
           ),
 
-          ValueCheckButton(),
-          Spacer(),
+          //  ValueCheckButton(value1: selectedMemberType,),
+          const Spacer(),
           // 다음 버튼
+
           JoinNextButtonRow(
-            nextScreenName: 'test',
+            pageType: PageType.memberType,
+            onSelect: () {
+              if (selectedMemberType == MemberType.doctor) {
+                context.goNamed('doctor_select_type');
+              } else {
+                context.goNamed('dealer_input_info');
+              }
+            },
           ),
         ],
       ),

@@ -1,0 +1,5 @@
+enum PageType {
+  memberType,
+  doctorSelection,
+
+}

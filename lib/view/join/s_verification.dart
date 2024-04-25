@@ -53,7 +53,7 @@ class _VerificationScreenState extends ConsumerState<VerificationScreen> {
       ),
     );
   }
-  
+
   Widget _buildPhoneNumber() {
     return Row(
       children: [
@@ -136,7 +136,7 @@ class _VerificationScreenState extends ConsumerState<VerificationScreen> {
             setState(() {
               isUploading = false;
             });
-            context.goNamed('BusinessCheck1');
+            context.goNamed('MemberTypeSelectionScreen');
 
           });
 

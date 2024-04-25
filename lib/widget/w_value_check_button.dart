@@ -21,7 +21,7 @@ class ValueCheckButton extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          gradient: LinearGradient(
+          gradient: const LinearGradient(
             colors: [Colors.blue, Colors.lightBlueAccent],
             begin: Alignment.centerLeft,
             end: Alignment.centerRight,
@@ -46,10 +46,10 @@ class ValueCheckButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
           ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-            child: const Text(
-              '값 확인하기',
+          child: const Padding(
+            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            child: Text(
+              'value check button',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,

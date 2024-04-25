@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nav/nav.dart';
 import 'package:test04dm/common/extension/context_extension.dart';
+import 'package:test04dm/view/join/s_dealer_input_info.dart';
+import 'package:test04dm/view/join/s_doctor_select_type.dart';
 import 'package:test04dm/view/join/s_member_type_selection.dart';
 import 'package:test04dm/view/main_page.dart';
 import 'package:test04dm/view/screen/login/vo_login_check.dart';
@@ -75,9 +77,21 @@ class _AppState extends State<App> with  WidgetsBindingObserver {
             builder: (context, state) => const LoginCheck(),
             routes: [
               GoRoute(
-                name: 'BusinessCheck1',
-                path: 'BusinessCheck1',
+                name: 'MemberTypeSelectionScreen',
+                path: 'MemberTypeSelectionScreen',
                 builder: (context, state) =>  MemberTypeSelectionScreen(),
+                routes: [
+                  GoRoute(
+                    name: 'doctor_select_type',
+                    path: 'doctor_select_type',
+                    builder: (context, state) =>  DoctorSelectTypeScreen(),
+                  ),
+                  GoRoute(
+                    name: 'dealer_input_info',
+                    path: 'dealer_input_info',
+                    builder: (context, state) =>  DealerInputScreen(),
+                  ),
+                ],
               ),
             ],
           ),
