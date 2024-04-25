@@ -47,9 +47,7 @@ class _VerificationScreenState extends ConsumerState<VerificationScreen> {
               _buildCheckButton(),
             ],
           ),
-          isUploading
-              ? const LoadingContainer(text: '정보 확인 중...')
-              : const SizedBox(),
+          LoadingContainer(text: '정보 확인 중...', isVisible: isUploading),
         ],
       ),
     );
