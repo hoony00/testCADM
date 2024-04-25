@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:test04dm/widget/w_appBar.dart';
 import 'package:test04dm/widget/w_height_and_width.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -33,12 +34,12 @@ class _VerificationScreenState extends ConsumerState<VerificationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
       body: Stack(
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const CustomAppbar(isBack: true).pOnly(top: 20),
               const Height(50),
               _buildSunTilte(),
               _buildPhoneNumber(),
@@ -138,7 +139,6 @@ class _VerificationScreenState extends ConsumerState<VerificationScreen> {
       visible: isVisibilityAuthNumber,
       child: ElevatedButton(
         onPressed: () {
-
           setState(() {
             isUploading = true;
           });
