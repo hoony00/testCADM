@@ -9,26 +9,26 @@ import 'package:test04dm/common/colors/color_palette.dart';
 import 'package:test04dm/widget/w_height_and_width.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-import '../../common/font/pretendard.dart';
-import '../../common/permission/permission_util.dart';
-import '../../provider/camera/send_pic.dart';
-import '../../provider/enum/page_type.dart';
-import '../../widget/w_custom_textf.dart';
-import '../../widget/w_dropdown.dart';
-import '../../widget/w_join_next_row.dart';
-import '../../widget/w_join_select_row.dart';
-import '../../widget/w_linear_progress_indicator.dart';
-import '../../widget/w_loding_container.dart';
-import '../../widget/w_title.dart';
+import '../../../common/font/pretendard.dart';
+import '../../../common/permission/permission_util.dart';
+import '../../../provider/camera/send_pic.dart';
+import '../../../provider/enum/page_type.dart';
+import '../../../widget/w_custom_textf.dart';
+import '../../../widget/w_dropdown.dart';
+import '../../../widget/w_join_next_row.dart';
+import '../../../widget/w_join_select_row.dart';
+import '../../../widget/w_linear_progress_indicator.dart';
+import '../../../widget/w_loding_container.dart';
+import '../../../widget/w_title.dart';
 
-class DoctorInputScreen extends ConsumerStatefulWidget {
-  const DoctorInputScreen({Key? key}) : super(key: key);
+class DoctorUploadScreen extends ConsumerStatefulWidget {
+  const DoctorUploadScreen({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<DoctorInputScreen> createState() => _DoctorInputScreenState();
+  ConsumerState<DoctorUploadScreen> createState() => _DoctorUploadScreenState();
 }
 
-class _DoctorInputScreenState extends ConsumerState<DoctorInputScreen> {
+class _DoctorUploadScreenState extends ConsumerState<DoctorUploadScreen> {
   late final TextEditingController _nameController;
   late final TextEditingController _phoneController;
   String? selectedDepartment; // 선택된 진료과를 저장할 변수
@@ -114,7 +114,6 @@ class _DoctorInputScreenState extends ConsumerState<DoctorInputScreen> {
                 // 다음 버튼
                 JoinNextButtonRow(
                   height: ref.watch(selectedImgProvider).isEmpty ? 80.h :20.h,
-                  pageType: PageType.memberType,
                   onSelect: () {
 
                     setState(() {

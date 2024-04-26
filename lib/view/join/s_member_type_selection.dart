@@ -60,7 +60,6 @@ class _MemberTypeSelectionScreenState extends State<MemberTypeSelectionScreen> {
 
           JoinNextButtonRow(
             height: 330.h,
-            pageType: PageType.memberType,
             onSelect: () {
               if (selectedMemberType == MemberType.doctor) {
                 context.goNamed('doctor_select_type');

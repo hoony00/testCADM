@@ -4,9 +4,10 @@ import 'package:go_router/go_router.dart';
 import 'package:nav/nav.dart';
 import 'package:test04dm/common/extension/context_extension.dart';
 import 'package:test04dm/view/home/s_home.dart';
-import 'package:test04dm/view/join/s_dealer_input_info.dart';
-import 'package:test04dm/view/join/s_doctor_input_info.dart';
-import 'package:test04dm/view/join/s_doctor_select_type.dart';
+import 'package:test04dm/view/join/delaler/s_dealer_input_info.dart';
+import 'package:test04dm/view/join/delaler/s_dealer_upload_info.dart';
+import 'package:test04dm/view/join/doctor/s_doctor_upload.dart';
+import 'package:test04dm/view/join/doctor/s_doctor_select_type.dart';
 import 'package:test04dm/view/join/s_member_type_selection.dart';
 import 'package:test04dm/view/main_page.dart';
 import 'package:test04dm/view/screen/login/vo_login_check.dart';
@@ -83,22 +84,31 @@ class _AppState extends State<App> with  WidgetsBindingObserver {
                 path: 'MemberTypeSelectionScreen',
                 builder: (context, state) =>  MemberTypeSelectionScreen(),
                 routes: [
+                  ///---------------의사
                   GoRoute(
                     name: 'doctor_select_type',
                     path: 'doctor_select_type',
                     builder: (context, state) =>  DoctorSelectTypeScreen(),
                     routes: [
                       GoRoute(
-                        name: 'doctor_input_info',
-                        path: 'doctor_input_info',
-                        builder: (context, state) =>  DoctorInputScreen(),
+                        name: 'doctor_upload_info',
+                        path: 'doctor_upload_info',
+                        builder: (context, state) =>  DoctorUploadScreen(),
                       ),
                     ],
                   ),
+                  ///---------------업자
                   GoRoute(
                     name: 'dealer_input_info',
                     path: 'dealer_input_info',
                     builder: (context, state) =>  DealerInputScreen(),
+                    routes: [
+                      GoRoute(
+                        name: 'dealer_upload_info',
+                        path: 'dealer_upload_info',
+                        builder: (context, state) =>  DealerUploadScreen(),
+                      ),
+                    ],
                   ),
                 ],
               ),

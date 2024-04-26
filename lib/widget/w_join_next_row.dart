@@ -2,20 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:test04dm/common/font/pretendard.dart';
-import 'package:test04dm/model/Enum/member_type.dart';
 import 'package:test04dm/provider/enum/page_type.dart';
 import 'package:test04dm/widget/w_height_and_width.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class JoinNextButtonRow extends StatelessWidget {
-  final Function()? onSelect;
-  final PageType pageType;
+  final Function() onSelect;
   final double height;
 
   const JoinNextButtonRow({
     Key? key,
-    this.onSelect,
-    required this.pageType, required this.height,
+    required this.onSelect,
+  required this.height,
   }) : super(key: key);
 
   @override
@@ -56,9 +54,7 @@ class JoinNextButtonRow extends StatelessWidget {
             Expanded(
               child: GestureDetector(
                 onTap: () {
-                  if (pageType == PageType.memberType) {
-                    onSelect!();
-                  }
+                    onSelect();
                 },
                 child: Container(
                   height: 50,

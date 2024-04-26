@@ -3,13 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../model/Enum/member_type.dart';
-import '../../provider/enum/page_type.dart';
-import '../../widget/w_height_and_width.dart';
-import '../../widget/w_join_next_row.dart';
-import '../../widget/w_join_select_row.dart';
-import '../../widget/w_linear_progress_indicator.dart';
-import '../../widget/w_title.dart';
+import '../../../model/Enum/member_type.dart';
+import '../../../provider/enum/page_type.dart';
+import '../../../widget/w_height_and_width.dart';
+import '../../../widget/w_join_next_row.dart';
+import '../../../widget/w_join_select_row.dart';
+import '../../../widget/w_linear_progress_indicator.dart';
+import '../../../widget/w_title.dart';
 
 class DoctorSelectTypeScreen extends ConsumerStatefulWidget {
   const DoctorSelectTypeScreen({super.key});
@@ -57,9 +57,8 @@ class _DoctorSelectTypeScreenState
           //  ValueCheckButton(value1: selectedMemberType,),
           JoinNextButtonRow(
             height: 330.h,
-            pageType: PageType.memberType,
             onSelect: () {
-              context.goNamed('doctor_input_info');
+              context.goNamed('doctor_upload_info');
             },
           ),
         ],

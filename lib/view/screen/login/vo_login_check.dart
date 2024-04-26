@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:test04dm/view/home/s_home.dart';
-import 'package:test04dm/view/join/s_verification.dart';
+import 'package:test04dm/view/join/s_phone_verification.dart';
 import 'package:test04dm/view/screen/login/s_login.dart';
 
 class LoginCheck extends StatelessWidget {

@@ -9,7 +9,7 @@ import '../provider/page_index_provider.dart';
 import 'Navigation/bottom_navigation/w_convex_bottom.dart';
 import 'fab/w_floating_daangn_button.dart';
 import 'home/s_home.dart';
-import 'join/s_verification.dart';
+import 'join/s_phone_verification.dart';
 
 class MainPage extends ConsumerStatefulWidget {
   const MainPage({super.key});
