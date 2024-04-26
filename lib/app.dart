@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nav/nav.dart';
 import 'package:test04dm/common/extension/context_extension.dart';
+import 'package:test04dm/view/home/s_home.dart';
 import 'package:test04dm/view/join/s_dealer_input_info.dart';
 import 'package:test04dm/view/join/s_doctor_input_info.dart';
 import 'package:test04dm/view/join/s_doctor_select_type.dart';
@@ -102,6 +103,11 @@ class _AppState extends State<App> with  WidgetsBindingObserver {
                 ],
               ),
             ],
+          ),
+          GoRoute(
+            name: 'home',
+            path: 'home',
+            builder: (context, state) =>  HomeScreen(),
           ),
         ],
       ),

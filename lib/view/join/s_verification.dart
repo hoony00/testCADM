@@ -118,7 +118,7 @@ class _VerificationScreenState extends ConsumerState<VerificationScreen> {
             isUploading = true;
           });
           //2초간 딜레이
-          Future.delayed(const Duration(seconds: 2), () {
+          Future.delayed(const Duration(seconds: 1), () {
             setState(() {
               isUploading = false;
             });

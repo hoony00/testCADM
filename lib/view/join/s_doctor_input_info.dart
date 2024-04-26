@@ -32,6 +32,7 @@ class _DoctorInputScreenState extends ConsumerState<DoctorInputScreen> {
   late final TextEditingController _nameController;
   late final TextEditingController _phoneController;
   String? selectedDepartment; // 선택된 진료과를 저장할 변수
+  bool isUploading = false;
 
   @override
   void initState() {
@@ -42,7 +43,6 @@ class _DoctorInputScreenState extends ConsumerState<DoctorInputScreen> {
 
   @override
   Widget build(BuildContext context) {
-    bool isUploading = false;
     final ImagePicker picker = ImagePicker();
 
     /// 갤러리
@@ -71,7 +71,6 @@ class _DoctorInputScreenState extends ConsumerState<DoctorInputScreen> {
 
 
     return Scaffold(
-      appBar: AppBar(),
       body: Stack(
         children: [
           SingleChildScrollView(
@@ -79,6 +78,7 @@ class _DoctorInputScreenState extends ConsumerState<DoctorInputScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                AppBar(),
                 const CustomLinearIndicator(value: 0.8),
                 const JoinTitle(title: '병원 정보를 입력해 주세요.'),
 
@@ -113,13 +113,24 @@ class _DoctorInputScreenState extends ConsumerState<DoctorInputScreen> {
 
                 // 다음 버튼
                 JoinNextButtonRow(
-                  height: ref.watch(selectedImgProvider).isEmpty ? 100.h : 40.h,
+                  height: ref.watch(selectedImgProvider).isEmpty ? 80.h :20.h,
                   pageType: PageType.memberType,
                   onSelect: () {
+
+                    setState(() {
+                      isUploading = true;
+                    });
+                    //2초간 딜레이
+                    Future.delayed(const Duration(seconds: 2), () {
+                      setState(() {
+                        isUploading = false;
+                      });
+                      context.goNamed('home');
+                    });
                     //병원 정보를 알려주세요
-                    context.goNamed('/join/hospital_info');
                   },
                 ),
+
               ],
             ),
           ),

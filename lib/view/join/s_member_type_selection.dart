@@ -59,7 +59,7 @@ class _MemberTypeSelectionScreenState extends State<MemberTypeSelectionScreen> {
           //  ValueCheckButton(value1: selectedMemberType,),
 
           JoinNextButtonRow(
-            height: 35.h,
+            height: 330.h,
             pageType: PageType.memberType,
             onSelect: () {
               if (selectedMemberType == MemberType.doctor) {
