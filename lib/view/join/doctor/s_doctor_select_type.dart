@@ -26,11 +26,11 @@ class _DoctorSelectTypeScreenState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          AppBar(),
           const CustomLinearIndicator(value: 0.5),
           const JoinTitle(title: '어떤 의사인가요?'),
 

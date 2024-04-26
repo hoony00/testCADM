@@ -19,6 +19,7 @@ import '../../../widget/w_join_next_row.dart';
 import '../../../widget/w_join_select_row.dart';
 import '../../../widget/w_linear_progress_indicator.dart';
 import '../../../widget/w_loding_container.dart';
+import '../../../widget/w_one_image.dart';
 import '../../../widget/w_title.dart';
 
 class DoctorUploadScreen extends ConsumerStatefulWidget {
@@ -51,9 +52,8 @@ class _DoctorUploadScreenState extends ConsumerState<DoctorUploadScreen> {
 
       await PermissionUtil.checkGalleryPermission(context);
 
-      final XFile? selectedImage = await picker.pickImage(source: ImageSource.gallery);
-
-
+      final XFile? selectedImage =
+          await picker.pickImage(source: ImageSource.gallery);
 
       if (selectedImage != null) {
         //기존 state 제거
@@ -69,154 +69,90 @@ class _DoctorUploadScreenState extends ConsumerState<DoctorUploadScreen> {
       }
     }
 
-
-    return Scaffold(
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                AppBar(),
-                const CustomLinearIndicator(value: 0.8),
-                const JoinTitle(title: '병원 정보를 입력해 주세요.'),
-
-                // 진료과 선택
-                CustomDropdownField(
-                  hintText: '진료과를 선택해주세요',
-                  options: ['내과', '외과', '정형외과', '피부과', '치과'],
-                  selectedOption: selectedDepartment,
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      selectedDepartment = newValue;
-                    });
-                  },
-                ),
-                // 병원명 선택
-                CustomTextField(
-                  controller: _nameController,
-                  hintText: '병원명',
-                  width: 0.90,
-                ),
-                // 병원 연락처
-                CustomTextField(
-                  controller: _phoneController,
-                  hintText: '병원 연락처',
-                  keyboardType: TextInputType.phone,
-                  width: 0.90,
-                ),
-
-                fileUpload(() {
-                  pickImage(context);
-                }),
-
-                // 다음 버튼
-                JoinNextButtonRow(
-                  height: ref.watch(selectedImgProvider).isEmpty ? 80.h :20.h,
-                  onSelect: () {
-
-                    setState(() {
-                      isUploading = true;
-                    });
-                    //2초간 딜레이
-                    Future.delayed(const Duration(seconds: 2), () {
-                      setState(() {
-                        isUploading = false;
-                      });
-                      context.goNamed('home');
-                    });
-                    //병원 정보를 알려주세요
-                  },
-                ),
-
-              ],
-            ),
-          ),
-          LoadingContainer(text: '권한 요청 중...', isVisible: isUploading),
-        ],
-      ),
-    );
-  }
-
-  Widget fileUpload(Function function) {
-    return Column(
-      children: [
-        if (ref.watch(selectedImgProvider).isEmpty)
-          Container(
-            height: 50,
-            decoration: ShapeDecoration(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  '선택된 이미지가 없습니다.',
-                  style: Pretendard.wblack_s14_w500,
-                ).px20(),
-              ],
-            ),
-          ).p16(),
-        if (ref.watch(selectedImgProvider).isNotEmpty)
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Stack(
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: Stack(
+          children: [
+            SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 10.w),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.w),
-                      image: DecorationImage(
-                        image: FileImage(
-                          File(ref.watch(selectedImgProvider)[0].path),
-                        ),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    width: 130.w,
-                    height: 140.w,
+                  AppBar(),
+                  const CustomLinearIndicator(value: 0.8),
+                  const JoinTitle(title: '병원 정보를 입력해 주세요.'),
+
+                  // 진료과 선택
+                  CustomDropdownField(
+                    hintText: '진료과를 선택해주세요',
+                    options: [
+                      '내과',
+                      '소아과',
+                      '피부과',
+                      '성형외과',
+                      '산부인과',
+                      '안과',
+                      '가정의학과',
+                      '정형외과',
+                      '이비인후과',
+                      '치과',
+                      '재활의학과',
+                      '기타'
+                    ],
+                    selectedOption: selectedDepartment,
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        selectedDepartment = newValue;
+                      });
+                    },
                   ),
-                  Positioned(
-                    top: 5.w,
-                    right: 5.w,
-                    child: InkWell(
-                      onTap: () =>
-                          ref.read(selectedImgProvider.notifier).removeImg(0),
-                      child: Icon(
-                        Icons.close,
-                        size: 30.sp,
-                        color: Colors.white,
-                      ),
-                    ),
+                  // 병원명 선택
+                  CustomTextField(
+                    controller: _nameController,
+                    hintText: '병원명',
+                    width: 0.90,
+                  ),
+                  // 병원 연락처
+                  CustomTextField(
+                    controller: _phoneController,
+                    hintText: '병원 연락처',
+                    keyboardType: TextInputType.phone,
+                    width: 0.90,
+                  ),
+
+                  FileUploadWidget(
+                    title: '의사 면허증 사본 업로드',
+                    onPressed: () {pickImage(context);},
+                  ),
+
+                  // 다음 버튼
+                  JoinNextButtonRow(
+                    height:
+                        ref.watch(selectedImgProvider).isEmpty ? 90.h : 20.h,
+                    onSelect: () {
+                      setState(() {
+                        isUploading = true;
+                      });
+                      //2초간 딜레이
+                      Future.delayed(const Duration(seconds: 2), () {
+                        setState(() {
+                          isUploading = false;
+                        });
+                        context.goNamed('home');
+                      });
+                    },
                   ),
                 ],
               ),
-            ],
-          ),
-        ElevatedButton(
-          //버튼 색 파란색
-          style: ElevatedButton.styleFrom(
-            backgroundColor: ColorPalette.brightBlue,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
             ),
-          ),
-          onPressed: () {
-            function();
-          },
-          child: Text(
-            '파일 선택',
-            style: TextStyle(color: ColorPalette.primaryColor, fontSize: 15.sp),
-          ),
-        ).p16(),
-
-      ],
+            LoadingContainer(text: '권한 요청 중...', isVisible: isUploading),
+          ],
+        ),
+      ),
     );
   }
-
-
 }

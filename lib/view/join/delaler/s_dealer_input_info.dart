@@ -31,36 +31,42 @@ class _DealerInputState extends ConsumerState<DealerInputScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          const CustomLinearIndicator(value: 0.5),
-          const JoinTitle(title: '사업자명과 사업자 등록번호를 \n입력해 주세요.'),
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset : false,
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            AppBar(),
+            const CustomLinearIndicator(value: 0.5),
+            const JoinTitle(title: '사업자명과 사업자 등록번호를 \n입력해 주세요.'),
 
-          CustomTextField(
-            controller: _businessNameController,
-            hintText: '사업자명 입력',
-            width: 0.90,
-          ),
-          // 병원 연락처
-          CustomTextField(
-            controller: _businessNumberController,
-            hintText: '사업자 등록 번호 입력',
-            keyboardType: TextInputType.phone,
-            width: 0.90,
-          ),
+            CustomTextField(
+              controller: _businessNameController,
+              hintText: '사업자명 입력',
+              width: 0.90,
+            ),
+            // 병원 연락처
+            CustomTextField(
+              controller: _businessNumberController,
+              hintText: '사업자 등록 번호 입력',
+              keyboardType: TextInputType.phone,
+              width: 0.90,
+            ),
 
-          // 다음 버튼
-          JoinNextButtonRow(
-            height: 300.h,
-            onSelect: () {
-                context.goNamed('dealer_upload_info');
-            },
-          ),
-        ],
+            // 다음 버튼
+            JoinNextButtonRow(
+              height: 300.h,
+              onSelect: () {
+                  context.goNamed('dealer_upload_info');
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

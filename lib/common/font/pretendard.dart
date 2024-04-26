@@ -37,11 +37,12 @@ class Pretendard {
   static const wPrimaryColor_s60_w500 = CustomTextStyle(fontFamily: fontFamily, color: ColorPalette.primaryColor, fontSize: 60.0, fontWeight: FontWeight.w500);
 
   static const wblack_s10_w500 = CustomTextStyle(fontFamily: fontFamily, color: ColorPalette.black, fontSize: 10.0, fontWeight: FontWeight.w500);
+  static const wblack_s11_w500 = CustomTextStyle(fontFamily: fontFamily, color: ColorPalette.black, fontSize: 11.0, fontWeight: FontWeight.w500);
   static const wblack_s12_w400 = CustomTextStyle(fontFamily: fontFamily, color: ColorPalette.black, fontSize: 12.0, fontWeight: FontWeight.w500);
   static const wblack_s12_w500 = CustomTextStyle(fontFamily: fontFamily, color: ColorPalette.black, fontSize: 12.0, fontWeight: FontWeight.w400);
   static const wblack_s12_w700 = CustomTextStyle(fontFamily: fontFamily, color: ColorPalette.black, fontSize: 12.0, fontWeight: FontWeight.w700);
 
-  static const wblack_s13_w500 = CustomTextStyle(fontFamily: fontFamily, color: ColorPalette.black, fontSize: 13.0, fontWeight: FontWeight.w500);
+  static const wblack_s13_w400 = CustomTextStyle(fontFamily: fontFamily, color: ColorPalette.black, fontSize: 13.0, fontWeight: FontWeight.w400);
   static const wblack_s13_w600 = CustomTextStyle(fontFamily: fontFamily, color: ColorPalette.black, fontSize: 13.0, fontWeight: FontWeight.w600);
 
 
